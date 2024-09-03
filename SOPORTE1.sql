@@ -18,6 +18,9 @@ GO
 USE soporte_AERO;
 GO
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
 -- Tabla Frequent Flyer Card
 IF OBJECT_ID('FrequentFlyerCard', 'U') IS NOT NULL 
 DROP TABLE FrequentFlyerCard;
@@ -30,6 +33,8 @@ CREATE TABLE FrequentFlyerCard (
 );
 GO
 
+------------------------------------------------------------------------
+
 -- Tabla Country
 IF OBJECT_ID('Country', 'U') IS NOT NULL 
 DROP TABLE Country;
@@ -40,6 +45,8 @@ CREATE TABLE Country (
     CountryName VARCHAR(100) NOT NULL UNIQUE
 );
 GO
+
+------------------------------------------------------------------------
 
 -- Tabla Plane Model
 IF OBJECT_ID('PlaneModel', 'U') IS NOT NULL 
@@ -53,6 +60,8 @@ CREATE TABLE PlaneModel (
 );
 GO
 
+------------------------------------------------------------------------
+
 -- Tabla Role
 IF OBJECT_ID('Role', 'U') IS NOT NULL 
 DROP TABLE Role;
@@ -64,6 +73,8 @@ CREATE TABLE Role (
     Description VARCHAR(255)
 );
 GO
+
+------------------------------------------------------------------------
 
 -- Tabla Service
 IF OBJECT_ID('Service', 'U') IS NOT NULL 
@@ -77,7 +88,8 @@ CREATE TABLE Service (
 );
 GO
 
------------------------------------------------------------
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 -- Tabla Customer
 IF OBJECT_ID('Customer', 'U') IS NOT NULL 
@@ -94,8 +106,14 @@ CREATE TABLE Customer (
 );
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Customer_FFCNumberID')
+BEGIN
+    CREATE INDEX IX_Customer_FFCNumberID ON Customer (FFCNumberID);
+END;
 
--- Tabla City relacionada con Country
+------------------------------------------------------------------------
+
+-- Tabla City 
 IF OBJECT_ID('City', 'U') IS NOT NULL 
 DROP TABLE City;
 GO
@@ -109,8 +127,9 @@ CREATE TABLE City (
 );
 GO
 
+------------------------------------------------------------------------
 
--- Tabla Document relacionada con Customer
+-- Tabla Document 
 IF OBJECT_ID('Document', 'U') IS NOT NULL 
 DROP TABLE Document;
 GO
@@ -127,8 +146,9 @@ CREATE TABLE Document (
 );
 GO
 
+------------------------------------------------------------------------
 
--- Tabla Airport relacionada con Country
+-- Tabla Airport 
 IF OBJECT_ID('Airport', 'U') IS NOT NULL 
 DROP TABLE Airport;
 GO
@@ -142,6 +162,7 @@ CREATE TABLE Airport (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla Airplane
 IF OBJECT_ID('Airplane', 'U') IS NOT NULL 
@@ -159,6 +180,7 @@ CREATE TABLE Airplane (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla Seat
 IF OBJECT_ID('Seat', 'U') IS NOT NULL 
@@ -176,6 +198,7 @@ CREATE TABLE Seat (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla FlightNumber
 IF OBJECT_ID('FlightNumber', 'U') IS NOT NULL 
@@ -200,6 +223,12 @@ CREATE TABLE FlightNumber (
 );
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_FlightNumber_DepartureTime')
+BEGIN
+    CREATE INDEX IX_FlightNumber_DepartureTime ON FlightNumber (DepartureTime);
+END;
+
+------------------------------------------------------------------------
 
 -- Tabla Flight
 IF OBJECT_ID('Flight', 'U') IS NOT NULL 
@@ -218,6 +247,7 @@ CREATE TABLE Flight (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla Available Seat
 IF OBJECT_ID('AvailableSeat', 'U') IS NOT NULL 
@@ -235,6 +265,7 @@ CREATE TABLE AvailableSeat (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla Ticket
 IF OBJECT_ID('Ticket', 'U') IS NOT NULL 
@@ -251,13 +282,19 @@ CREATE TABLE Ticket (
 );
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Ticket_CustomerID')
+BEGIN
+    CREATE INDEX IX_Ticket_CustomerID ON Ticket (CustomerID);
+END;
+
+------------------------------------------------------------------------
 
 -- Tabla Coupon
 IF OBJECT_ID('Coupon', 'U') IS NOT NULL 
 DROP TABLE Coupon;
 GO
 
--- Crear la tabla Coupon sin cascadas
+--  tabla Coupon 
 CREATE TABLE Coupon (
     CouponID INT PRIMARY KEY IDENTITY(1,1),
     DateOfRedemption DATE,
@@ -276,6 +313,8 @@ CREATE TABLE Coupon (
 );
 GO
 
+------------------------------------------------------------------------
+
 -- Tabla Pieces of Luggage
 IF OBJECT_ID('PiecesOfLuggage', 'U') IS NOT NULL 
 DROP TABLE PiecesOfLuggage;
@@ -290,6 +329,8 @@ CREATE TABLE PiecesOfLuggage (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
+
+------------------------------------------------------------------------
 
 -- Tabla Passenger
 IF OBJECT_ID('Passenger', 'U') IS NOT NULL 
@@ -308,6 +349,7 @@ CREATE TABLE Passenger (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla Employee
 IF OBJECT_ID('Employee', 'U') IS NOT NULL 
@@ -327,6 +369,7 @@ CREATE TABLE Employee (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla EmployeeFlightAssignment
 IF OBJECT_ID('EmployeeFlightAssignment', 'U') IS NOT NULL 
@@ -345,6 +388,7 @@ CREATE TABLE EmployeeFlightAssignment (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla MaintenanceSchedule
 IF OBJECT_ID('MaintenanceSchedule', 'U') IS NOT NULL 
@@ -363,6 +407,7 @@ CREATE TABLE MaintenanceSchedule (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla InFlightService
 IF OBJECT_ID('InFlightService', 'U') IS NOT NULL 
@@ -383,6 +428,7 @@ CREATE TABLE InFlightService (
 );
 GO
 
+------------------------------------------------------------------------
 
 -- Tabla Booking
 IF OBJECT_ID('Booking', 'U') IS NOT NULL 
@@ -402,6 +448,12 @@ CREATE TABLE Booking (
 );
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Booking_CustomerID')
+BEGIN
+    CREATE INDEX IX_Booking_CustomerID ON Booking (CustomerID);
+END;
+
+------------------------------------------------------------------------
 
 -- Tabla Payment
 IF OBJECT_ID('Payment', 'U') IS NOT NULL 
@@ -419,35 +471,15 @@ CREATE TABLE Payment (
 );
 GO
 
-
--- Crear índices para optimizar consultas
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Customer_FFCNumberID')
-BEGIN
-    CREATE INDEX IX_Customer_FFCNumberID ON Customer (FFCNumberID);
-END;
-
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Ticket_CustomerID')
-BEGIN
-    CREATE INDEX IX_Ticket_CustomerID ON Ticket (CustomerID);
-END;
-
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_FlightNumber_DepartureTime')
-BEGIN
-    CREATE INDEX IX_FlightNumber_DepartureTime ON FlightNumber (DepartureTime);
-END;
-
-IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Booking_CustomerID')
-BEGIN
-    CREATE INDEX IX_Booking_CustomerID ON Booking (CustomerID);
-END;
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Payment_BookingID')
 BEGIN
     CREATE INDEX IX_Payment_BookingID ON Payment (BookingID);
 END;
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
--- Insertar datos en FrequentFlyerCard
+--  datos en FrequentFlyerCard
 INSERT INTO FrequentFlyerCard (FFCNumber, Miles, MealCode) VALUES
 (1001, 5000, 'A'),
 (1002, 10000, 'B'),
@@ -460,7 +492,9 @@ INSERT INTO FrequentFlyerCard (FFCNumber, Miles, MealCode) VALUES
 (1009, 45000, 'C'),
 (1010, 50000, 'A');
 
--- Insertar datos en Customer
+------------------------------------------------------------------------
+
+-- datos en Customer
 INSERT INTO Customer (DateOfBirth, Name, FFCNumberID) VALUES
 ('1985-06-15', 'Juan Pérez', 1001),
 ('1990-04-22', 'Ana Gómez', 1002),
@@ -473,7 +507,9 @@ INSERT INTO Customer (DateOfBirth, Name, FFCNumberID) VALUES
 ('1991-05-30', 'Ricardo Ramírez', 1009),
 ('1994-10-11', 'Elena Morales', 1010);
 
--- Insertar datos en Country
+------------------------------------------------------------------------
+
+--  datos en Country
 INSERT INTO Country (CountryName) VALUES
 ('España'),
 ('Francia'),
@@ -481,7 +517,9 @@ INSERT INTO Country (CountryName) VALUES
 ('Italia'),
 ('Portugal');
 
--- Insertar datos en City
+------------------------------------------------------------------------
+
+--  datos en City
 INSERT INTO City (CityName, CountryID) VALUES
 ('Madrid', 1),
 ('Barcelona', 1),
@@ -494,7 +532,9 @@ INSERT INTO City (CityName, CountryID) VALUES
 ('Milán', 4),
 ('Lisboa', 5);
 
--- Insertar datos en Airport
+------------------------------------------------------------------------
+
+--datos en Airport
 INSERT INTO Airport (Name, CountryID) VALUES
 ('Aeropuerto Internacional de Madrid', 1),
 ('Aeropuerto de Barcelona-El Prat', 1),
@@ -507,7 +547,9 @@ INSERT INTO Airport (Name, CountryID) VALUES
 ('Aeropuerto de Gran Canaria', 1),
 ('Aeropuerto de Tenerife Sur', 1);
 
--- Insertar datos en PlaneModel
+------------------------------------------------------------------------
+
+--  datos en PlaneModel
 INSERT INTO PlaneModel (Description, Graphic) VALUES
 ('Boeing 737', NULL),
 ('Airbus A320', NULL),
@@ -520,7 +562,9 @@ INSERT INTO PlaneModel (Description, Graphic) VALUES
 ('Airbus A321', NULL),
 ('Boeing 777', NULL);
 
--- Insertar datos en Airplane
+------------------------------------------------------------------------
+
+--  datos en Airplane
 INSERT INTO Airplane (RegistrationNumber, BeginOfOperation, Status, PlaneModID) VALUES
 ('EC-MAD', '2015-01-01', 'Operativo', 1),
 ('EC-BCN', '2016-03-15', 'Mantenimiento', 2),
@@ -533,7 +577,9 @@ INSERT INTO Airplane (RegistrationNumber, BeginOfOperation, Status, PlaneModID) 
 ('EC-GCN', '2023-01-15', 'Operativo', 9),
 ('EC-TFS', '2024-05-05', 'Operativo', 10);
 
--- Insertar datos en Seat
+------------------------------------------------------------------------
+
+--  datos en Seat
 INSERT INTO Seat (Size, Number, Location, PlaneModelID) VALUES
 ('Turista', '12A', 'Pasillo', 1),
 ('Turista', '12B', 'Ventana', 1),
@@ -546,7 +592,9 @@ INSERT INTO Seat (Size, Number, Location, PlaneModelID) VALUES
 ('Ejecutiva', '4A', 'Ventana', 5),
 ('Economica', '20A', 'Pasillo', 6);
 
--- Insertar datos en FlightNumber
+------------------------------------------------------------------------
+
+--  datos en FlightNumber
 INSERT INTO FlightNumber (DepartureTime, Description, Type, Airline, StartAirportID, GoalAirportID, PlaneModelID) VALUES
 ('2024-08-04 10:00:00', 'Vuelo a Madrid', 'Internacional', 'Iberia', 1, 2, 1),
 ('2024-08-04 14:00:00', 'Vuelo a Barcelona', 'Nacional', 'Vueling', 2, 3, 2),
@@ -559,7 +607,9 @@ INSERT INTO FlightNumber (DepartureTime, Description, Type, Airline, StartAirpor
 ('2024-08-06 15:00:00', 'Vuelo a Gran Canaria', 'Internacional', 'Iberia', 9, 10, 9),
 ('2024-08-06 17:00:00', 'Vuelo a Tenerife Sur', 'Internacional', 'Vueling', 10, 1, 10);
 
--- Insertar datos en Flight
+------------------------------------------------------------------------
+
+--  datos en Flight
 INSERT INTO Flight (BoardingTime, FlightDate, Gate, CheckInCounter, FlightNumID) VALUES
 ('09:30:00', '2024-08-04', 'A1', '1', 1),
 ('13:30:00', '2024-08-04', 'B2', '2', 2),
@@ -572,7 +622,9 @@ INSERT INTO Flight (BoardingTime, FlightDate, Gate, CheckInCounter, FlightNumID)
 ('14:30:00', '2024-08-06', 'I9', '9', 9),
 ('16:30:00', '2024-08-06', 'J10', '10', 10);
 
--- Insertar datos en AvailableSeat
+------------------------------------------------------------------------
+
+--  datos en AvailableSeat
 INSERT INTO AvailableSeat (SeatID, FlightID) VALUES
 (1, 1),
 (2, 1),
@@ -585,7 +637,9 @@ INSERT INTO AvailableSeat (SeatID, FlightID) VALUES
 (9, 5),
 (10, 5);
 
--- Insertar datos en Ticket
+------------------------------------------------------------------------
+
+--  datos en Ticket
 INSERT INTO Ticket (TicketingCode, Number, CustomerID) VALUES
 ('TK1001', 12345, 1),
 ('TK1002', 12346, 2),
@@ -598,7 +652,9 @@ INSERT INTO Ticket (TicketingCode, Number, CustomerID) VALUES
 ('TK1009', 12353, 9),
 ('TK1010', 12354, 10);
 
--- Insertar datos en Coupon
+------------------------------------------------------------------------
+
+--  datos en Coupon
 INSERT INTO Coupon (DateOfRedemption, Class, Standby, MealCode, TicketID, FlightID, AvailableSeatID) VALUES
 ('2024-08-03', 'Economica', 'No', 'A-b', 1, 1, 1),
 ('2024-08-04', 'Ejecutiva', 'Sí', 'B-c', 2, 2, 2),
@@ -611,7 +667,9 @@ INSERT INTO Coupon (DateOfRedemption, Class, Standby, MealCode, TicketID, Flight
 ('2024-08-01', 'Turista', 'No', 'C-bai', 9, 9, 9),
 ('2024-07-31', 'Economica', 'Sí', 'A-baio', 10, 10, 10);
 
--- Insertar datos en PiecesOfLuggage
+------------------------------------------------------------------------
+
+--  datos en PiecesOfLuggage
 INSERT INTO PiecesOfLuggage (Number, Weight, CouponID) VALUES
 (1, 23.5, 1),
 (2, 15.0, 2),
@@ -624,7 +682,9 @@ INSERT INTO PiecesOfLuggage (Number, Weight, CouponID) VALUES
 (9, 25.4, 9),
 (10, 16.7, 10);
 
--- Insertar datos en Passenger
+------------------------------------------------------------------------
+
+--  datos en Passenger
 INSERT INTO Passenger (Name, DateOfBirth, PassportNumber, Nationality, CustomerID) VALUES
 ('José Álvarez', '1980-12-11', 'A1234567', 'Española', 1),
 ('Isabel Martínez', '1992-03-20', 'B2345678', 'Española', 2),
@@ -637,7 +697,9 @@ INSERT INTO Passenger (Name, DateOfBirth, PassportNumber, Nationality, CustomerI
 ('Manuel Fernández', '1984-01-20', 'I9012345', 'Española', 9),
 ('Ana Belén Morales', '1993-02-17', 'J0123456', 'Española', 10);
 
--- Insertar datos en Role
+------------------------------------------------------------------------
+
+--  datos en Role
 INSERT INTO Role (RoleName, Description) VALUES
 ('Piloto', 'Responsable de volar el avión'),
 ('Copiloto', 'Asiste al piloto en el vuelo'),
@@ -650,7 +712,9 @@ INSERT INTO Role (RoleName, Description) VALUES
 ('Administrador de Flotas', 'Gestiona la flota de aviones'),
 ('Asistente de Servicio a Bordo', 'Ofrece servicios a bordo del avión');
 
--- Insertar datos en Employee
+------------------------------------------------------------------------
+
+--  datos en Employee
 INSERT INTO Employee (Name, DateOfBirth, HireDate, Salary, Status, RoleID) VALUES
 ('Carlos Martínez', '1975-03-01', '2010-05-15', 3000.00, 'Activo', 1),
 ('Laura Fernández', '1980-09-10', '2012-08-23', 2500.00, 'Activo', 2),
@@ -663,7 +727,9 @@ INSERT INTO Employee (Name, DateOfBirth, HireDate, Salary, Status, RoleID) VALUE
 ('Javier Ramírez', '1992-06-18', '2022-07-16', 3100.00, 'Activo', 9),
 ('Ana Ruiz', '1987-03-25', '2023-01-10', 3200.00, 'Activo', 10);
 
--- Insertar datos en EmployeeFlightAssignment
+------------------------------------------------------------------------
+
+-- datos en EmployeeFlightAssignment
 INSERT INTO EmployeeFlightAssignment (EmployeeID, FlightID, AssignedRole) VALUES
 (1, 1, 'Piloto'),
 (2, 1, 'Copiloto'),
@@ -676,7 +742,9 @@ INSERT INTO EmployeeFlightAssignment (EmployeeID, FlightID, AssignedRole) VALUES
 (9, 5, 'Gerente de Aeropuerto'),
 (10, 5, 'Administrador de Flotas');
 
--- Insertar datos en MaintenanceSchedule
+------------------------------------------------------------------------
+
+--  datos en MaintenanceSchedule
 INSERT INTO MaintenanceSchedule (AirplaneID, ScheduledDate, MaintenanceType, Description, Status) VALUES
 (1, '2024-09-15', 'Revisión General', 'Revisión de sistemas y motores', 'Programado'),
 (2, '2024-10-20', 'Cambio de Aceite', 'Cambio de aceite y filtros', 'Programado'),
@@ -689,7 +757,9 @@ INSERT INTO MaintenanceSchedule (AirplaneID, ScheduledDate, MaintenanceType, Des
 (9, '2025-05-30', 'Revisión de Sistemas de Navegación', 'Revisión de sistemas de navegación', 'En Progreso'),
 (10, '2025-06-15', 'Mantenimiento de Motor', 'Mantenimiento preventivo del motor', 'Programado');
 
--- Insertar datos en Service
+------------------------------------------------------------------------
+
+--  datos en Service
 INSERT INTO Service (ServiceType, Description) VALUES
 ('Comida', 'Servicio de comida a bordo'),
 ('Bebida', 'Servicio de bebidas a bordo'),
@@ -702,7 +772,9 @@ INSERT INTO Service (ServiceType, Description) VALUES
 ('Almohada', 'Almohada para comodidad durante el vuelo'),
 ('Cobija', 'Cobija para mayor confort');
 
--- Insertar datos en InFlightService
+------------------------------------------------------------------------
+
+-- datos en InFlightService
 INSERT INTO InFlightService (FlightID, ServiceID, ProvidedByEmployeeID) VALUES
 (1, 1, 3),
 (1, 2, 4),
@@ -715,7 +787,9 @@ INSERT INTO InFlightService (FlightID, ServiceID, ProvidedByEmployeeID) VALUES
 (5, 3, 1),
 (5, 6, 2);
 
--- Insertar datos en Booking
+------------------------------------------------------------------------
+
+--  datos en Booking
 INSERT INTO Booking (BookingDate, Status, CustomerID, FlightID) VALUES
 ('2024-08-01', 'Confirmada', 1, 1),
 ('2024-08-02', 'Confirmada', 2, 2),
@@ -728,7 +802,9 @@ INSERT INTO Booking (BookingDate, Status, CustomerID, FlightID) VALUES
 ('2024-08-09', 'Confirmada', 9, 9),
 ('2024-08-10', 'Confirmada', 10, 10);
 
--- Insertar datos en Payment
+------------------------------------------------------------------------
+
+-- datos en Payment
 INSERT INTO Payment (Amount, PaymentDate, PaymentMethod, BookingID) VALUES
 (150.00, '2024-08-01', 'Tarjeta de Crédito', 1),
 (200.00, '2024-08-02', 'Efectivo', 2),
@@ -741,7 +817,9 @@ INSERT INTO Payment (Amount, PaymentDate, PaymentMethod, BookingID) VALUES
 (210.00, '2024-08-09', 'Tarjeta de Crédito', 9),
 (230.00, '2024-08-10', 'Efectivo', 10);
 
--- Insertar datos en Document
+------------------------------------------------------------------------
+
+-- datos en Document
 INSERT INTO Document (DocumentType, DocumentNumber, IssueDate, ExpiryDate, CustomerID) VALUES
 ('Pasaporte', '123456789', '2020-01-01', '2030-01-01', 1),
 ('Licencia de Conducir', '987654321', '2018-05-05', '2028-05-05', 2),
@@ -749,8 +827,10 @@ INSERT INTO Document (DocumentType, DocumentNumber, IssueDate, ExpiryDate, Custo
 ('Pasaporte', '192837465', '2021-02-02', '2031-02-02', 4),
 ('Licencia de Conducir', '817263545', '2017-07-07', '2027-07-07', 5);
 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 
--- Consultas para mostrar datos
+-- mostrar datos
 SELECT * FROM FrequentFlyerCard;
 SELECT * FROM Customer;
 SELECT * FROM Airport;
