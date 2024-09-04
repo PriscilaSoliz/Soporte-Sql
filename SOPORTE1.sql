@@ -1,4 +1,4 @@
-﻿-- Usar la base de datos temporal para operaciones preliminares
+﻿﻿-- Usar la base de datos temporal para operaciones preliminares
 USE tempdb;
 GO
 
@@ -13,7 +13,7 @@ GO
 CREATE DATABASE soporte_AERO;
 GO
 
--- Usar la base de datos reci�n creada
+-- Usar la base de datos recien creada
 USE soporte_AERO;
 GO
 
@@ -57,8 +57,6 @@ BEGIN
     CREATE INDEX IX_Country_CountryName ON Country (CountryName);
 END;
 
-
-
 ------------------------------------------------------------------------
 
 -- Tabla Plane Model
@@ -74,19 +72,16 @@ CREATE TABLE PlaneModel (
 GO
 
 -- índice para el campo Description
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_PlaneModel_Description')
 BEGIN
     CREATE INDEX IX_PlaneModel_Description ON PlaneModel (Description);
 END;
 
 -- Crear índice para el campo PlaneModelID
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_PlaneModel_PlaneModelID')
 BEGIN
     CREATE INDEX IX_PlaneModel_PlaneModelID ON PlaneModel (PlaneModelID);
 END;
-
 
 ------------------------------------------------------------------------
 
@@ -149,9 +144,9 @@ CREATE TABLE Customer (
     FFCNumberID INT NULL,
 	CustomerCategoryID INT NULL,
     CONSTRAINT FK_Customer_FFCNumber FOREIGN KEY (FFCNumberID) REFERENCES FrequentFlyerCard(FFCNumber)
-        ON DELETE SET NULL, -- Permitir NULL si la tarjeta es eliminada
+        ON DELETE SET NULL, 
 	CONSTRAINT FK_Customer_Category FOREIGN KEY (CustomerCategoryID) REFERENCES Customercategory(id)
-        ON DELETE SET NULL ON UPDATE CASCADE -- Permitir NULL o Actualizar si la categoría de cliente es eliminada o actualizada
+        ON DELETE SET NULL ON UPDATE CASCADE 
 );
 GO
 
@@ -184,12 +179,10 @@ CREATE TABLE City (
 GO
 
 -- índice para  el campo CityName
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_City_CityName')
 BEGIN
     CREATE INDEX IX_City_CityName ON City (CityName);
 END;
-
 
 ------------------------------------------------------------------------
 
@@ -242,14 +235,12 @@ CREATE TABLE Airport (
 GO
 
 -- índice para optimizar CountryID
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airport_CountryID')
 BEGIN
     CREATE INDEX IX_Airport_CountryID ON Airport (CountryID);
 END;
 
 -- índice para el campo Name
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airport_Name')
 BEGIN
     CREATE INDEX IX_Airport_Name ON Airport (Name);
@@ -274,7 +265,6 @@ CREATE TABLE Airplane (
 GO
 
 -- índice para el campo RegistrationNumber
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airplane_RegistrationNumber')
 BEGIN
     CREATE INDEX IX_Airplane_RegistrationNumber ON Airplane (RegistrationNumber);
@@ -282,7 +272,6 @@ END;
 
 
 -- índice para  el campo PlaneModID
-
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airplane_PlaneModID')
 BEGIN
     CREATE INDEX IX_Airplane_PlaneModID ON Airplane (PlaneModID);
@@ -305,6 +294,12 @@ CREATE TABLE Seat (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
+
+-- Índice para PlaneModelID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Seat_PlaneModelID')
+BEGIN
+    CREATE INDEX IX_Seat_PlaneModelID ON Seat (PlaneModelID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -342,7 +337,6 @@ BEGIN
     CREATE INDEX IX_FlightNumber_Type ON FlightNumber (Type);
 END;
 
-
 ------------------------------------------------------------------------
 
 -- Tabla Flight
@@ -362,23 +356,11 @@ CREATE TABLE Flight (
 );
 GO
 
-------------------------------------------------------------------------
-
--- Tabla Available Seat
-IF OBJECT_ID('AvailableSeat', 'U') IS NOT NULL 
-DROP TABLE AvailableSeat;
-GO
-
-CREATE TABLE AvailableSeat (
-    SeatID INT,
-    FlightID INT,
-    CONSTRAINT PK_AvailableSeat PRIMARY KEY (SeatID, FlightID),
-    CONSTRAINT FK_AvailableSeat_Seat FOREIGN KEY (SeatID) REFERENCES Seat(SeatID)
-        ON DELETE CASCADE ON UPDATE CASCADE,  -- Eliminar o actualizar asiento afectado
-    CONSTRAINT FK_AvailableSeat_Flight FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
-        ON DELETE CASCADE ON UPDATE CASCADE   -- Eliminar o actualizar vuelo afectado
-);
-GO
+-- Índice en FlightNumID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Flight_FlightNumID')
+BEGIN
+    CREATE INDEX IX_Flight_FlightNumID ON Flight (FlightNumID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -401,7 +383,6 @@ BEGIN
 END;
 
 ------------------------------------------------------------------------
-
 -- Tabla Ticket
 IF OBJECT_ID('Ticket', 'U') IS NOT NULL 
 DROP TABLE Ticket;
@@ -428,7 +409,7 @@ END;
 -- Índice en Number
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Ticket_Number')
 BEGIN
-    CREATE INDEX IX_Ticket_Number ON Ticket (CustomerID);
+    CREATE INDEX IX_Ticket_Number ON Ticket (Number);
 END;
 
 ------------------------------------------------------------------------
@@ -467,6 +448,39 @@ END;
 
 ------------------------------------------------------------------------
 
+-- Tabla Available Seat
+IF OBJECT_ID('AvailableSeat', 'U') IS NOT NULL 
+DROP TABLE AvailableSeat;
+GO
+
+CREATE TABLE AvailableSeat (
+    AvailableSeatID INT PRIMARY KEY IDENTITY(1,1),
+    SeatID INT,
+    FlightID INT,
+	CouponID INT,
+    CONSTRAINT FK_AvailableSeat_Seat FOREIGN KEY (SeatID) REFERENCES Seat(SeatID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_AvailableSeat_Flight FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FK_AvailableSeat_Coupon FOREIGN KEY (CouponID) REFERENCES Coupon(CouponID)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+GO
+
+-- Indice en FlightID, SeatID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_AvailableSeat_FlightID_SeatID')
+BEGIN
+    CREATE INDEX IX_AvailableSeat_FlightID_SeatID ON AvailableSeat (FlightID, SeatID);
+END;
+
+-- Indice en SeatID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_AvailableSeat_SeatID')
+BEGIN
+    CREATE INDEX IX_AvailableSeat_SeatID ON AvailableSeat (SeatID);
+END;
+
+------------------------------------------------------------------------
+
 -- Tabla Pieces of Luggage
 IF OBJECT_ID('PiecesOfLuggage', 'U') IS NOT NULL 
 DROP TABLE PiecesOfLuggage;
@@ -496,25 +510,6 @@ END;
 
 ------------------------------------------------------------------------
 
--- Tabla Passenger
-IF OBJECT_ID('Passenger', 'U') IS NOT NULL 
-DROP TABLE Passenger;
-GO
-
-CREATE TABLE Passenger (
-    PassengerID INT PRIMARY KEY IDENTITY(1,1),
-    Name VARCHAR(100) NOT NULL,
-    DateOfBirth DATE CHECK (DateOfBirth <= GETDATE()),
-    PassportNumber VARCHAR(50) NOT NULL,
-    Nationality VARCHAR(50),
-    CustomerID INT,
-    CONSTRAINT FK_Passenger_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-GO
-
-------------------------------------------------------------------------
-
 -- Tabla Employee
 IF OBJECT_ID('Employee', 'U') IS NOT NULL 
 DROP TABLE Employee;
@@ -523,7 +518,7 @@ GO
 CREATE TABLE Employee (
     EmployeeID INT PRIMARY KEY IDENTITY(1,1),
     Name VARCHAR(100) NOT NULL,
-    DateOfBirth DATE CHECK (DateOfBirth <= GETDATE()),
+    DateOfBirth DATE CHECK (DateOfBirth <= GETDATE() AND DateOfBirth >= DATEADD(YEAR, -70, GETDATE())),
     HireDate DATE CHECK (HireDate <= GETDATE()),
     Salary DECIMAL(10, 2) CHECK (Salary > 0),
     Status VARCHAR(50) CHECK (Status IN ('Activo', 'Inactivo')),
@@ -532,6 +527,12 @@ CREATE TABLE Employee (
         ON DELETE NO ACTION ON UPDATE CASCADE
 );
 GO
+
+-- Índice en RoleID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Employee_RoleID')
+BEGIN
+    CREATE INDEX IX_Employee_RoleID ON Employee (RoleID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -544,7 +545,6 @@ CREATE TABLE EmployeeFlightAssignment (
     AssignmentID INT PRIMARY KEY IDENTITY(1,1),
     EmployeeID INT,
     FlightID INT,
-    AssignedRole VARCHAR(50),
     CONSTRAINT FK_Assignment_Employee FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_Assignment_Flight FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
@@ -552,24 +552,11 @@ CREATE TABLE EmployeeFlightAssignment (
 );
 GO
 
-------------------------------------------------------------------------
-
--- Tabla MaintenanceSchedule
-IF OBJECT_ID('MaintenanceSchedule', 'U') IS NOT NULL 
-DROP TABLE MaintenanceSchedule;
-GO
-
-CREATE TABLE MaintenanceSchedule (
-    ScheduleID INT PRIMARY KEY IDENTITY(1,1),
-    AirplaneID INT,
-    ScheduledDate DATE NOT NULL,
-    MaintenanceType VARCHAR(100),
-    Description VARCHAR(255),
-    Status VARCHAR(50) CHECK (Status IN ('Programado', 'En Progreso', 'Completado')),
-    CONSTRAINT FK_Maintenance_Airplane FOREIGN KEY (AirplaneID) REFERENCES Airplane(AirplaneID)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-GO
+-- Índice para EmployeeID, FlightID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_EmployeeFlightAssignment_EmployeeID_FlightID')
+BEGIN
+    CREATE INDEX IX_EmployeeFlightAssignment_EmployeeID_FlightID ON EmployeeFlightAssignment (EmployeeID, FlightID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -591,6 +578,18 @@ CREATE TABLE InFlightService (
         ON DELETE SET NULL ON UPDATE CASCADE
 );
 GO
+
+-- Índice en FlightID y ServiceID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_InFlightService_FlightID_ServiceID')
+BEGIN
+    CREATE INDEX IX_InFlightService_FlightID_ServiceID ON InFlightService (FlightID, ServiceID);
+END;
+
+-- Índice en ProvidedByEmployeeID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_InFlightService_ProvidedByEmployeeID')
+BEGIN
+    CREATE INDEX IX_InFlightService_ProvidedByEmployeeID ON InFlightService (ProvidedByEmployeeID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -623,7 +622,6 @@ IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Booking_BookingDate')
 BEGIN
     CREATE INDEX IX_Booking_BookingDate ON Booking (BookingDate);
 END;
-
 
 ------------------------------------------------------------------------
 
@@ -682,8 +680,8 @@ INSERT INTO Customercategory (category_name) VALUES
 
 -- datos en Customer
 INSERT INTO Customer (DateOfBirth, Name, FFCNumberID, CustomerCategoryID) VALUES
-('1985-06-15', 'Juan Pérez', 1001, 1),  -- Asumiendo que el ID 1 corresponde a 'Regular'
-('1990-04-22', 'Ana Gómez', 1002, 2),  -- Asumiendo que el ID 2 corresponde a 'Frecuente'
+('1985-06-15', 'Juan Pérez', 1001, 1),  -- 1 corresponde a 'Regular'
+('1990-04-22', 'Ana Gómez', 1002, 2),  --  2 corresponde a 'Frecuente'
 ('1982-09-10', 'Carlos Martínez', 1003, 1),
 ('1995-12-05', 'María Fernández', 1004, 2),
 ('1988-07-19', 'Luis Rodríguez', 1005, 1),
@@ -809,22 +807,6 @@ INSERT INTO Flight (BoardingTime, FlightDate, Gate, CheckInCounter, FlightNumID)
 ('16:30:00', '2024-08-06', 'J10', '10', 10);
 
 ------------------------------------------------------------------------
-
---  datos en AvailableSeat
-INSERT INTO AvailableSeat (SeatID, FlightID) VALUES
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 2),
-(5, 3),
-(6, 3),
-(7, 4),
-(8, 4),
-(9, 5),
-(10, 5);
-
-------------------------------------------------------------------------
-
 -- datos en ticketcategory
 INSERT INTO ticketcategory (category_name) VALUES
 ('Primera clase'),
@@ -836,10 +818,10 @@ INSERT INTO ticketcategory (category_name) VALUES
 
 -- Datos en Ticket
 INSERT INTO Ticket (Number, CustomerID, TicketCategoryID) VALUES
-(12345, 1, 1), -- Asumiendo que 'Primera clase' tiene id 1
-(12346, 2, 2), -- Asumiendo que 'Ejecutiva' tiene id 2
-(12347, 3, 3), -- Asumiendo que 'Premium' tiene id 3
-(12348, 4, 4), -- Asumiendo que 'Económica' tiene id 4
+(12345, 1, 1), --  'Primera clase' tiene id 1
+(12346, 2, 2), --  'Ejecutiva' tiene id 2
+(12347, 3, 3), --  'Premium' tiene id 3
+(12348, 4, 4), --  'Económica' tiene id 4
 (12349, 5, 1),
 (12350, 6, 2),
 (12351, 7, 3),
@@ -848,7 +830,6 @@ INSERT INTO Ticket (Number, CustomerID, TicketCategoryID) VALUES
 (12354, 10, 2);
 
 ------------------------------------------------------------------------
-
 --  Datos en Coupon
 INSERT INTO Coupon (DateOfRedemption, Class, Standby, MealCode, TicketID, FlightID) VALUES
 ('2024-08-03', 'Economica', 'No', 'A-b', 1, 1),
@@ -862,12 +843,24 @@ INSERT INTO Coupon (DateOfRedemption, Class, Standby, MealCode, TicketID, Flight
 ('2024-08-01', 'Turista', 'No', 'C-bai', 9, 9),
 ('2024-07-31', 'Economica', 'Si', 'A-baio', 10, 10);
 
+------------------------------------------------------------------------
+
+--  datos en AvailableSeat
+INSERT INTO AvailableSeat (SeatID, FlightID, CouponID) VALUES
+(2, 1, 2),
+(3, 2, 3),
+(4, 2, 4),
+(5, 3, 5),
+(6, 3, 6),
+(7, 4, 7),
+(8, 4, 8),
+(9, 5, 9),
+(10, 5, 10);
 
 ------------------------------------------------------------------------
 
 --  datos en PiecesOfLuggage
 INSERT INTO PiecesOfLuggage (Number, Weight, CouponID) VALUES
-(1, 23.5, 1),
 (2, 15.0, 2),
 (3, 18.2, 3),
 (4, 22.0, 4),
@@ -880,78 +873,30 @@ INSERT INTO PiecesOfLuggage (Number, Weight, CouponID) VALUES
 
 ------------------------------------------------------------------------
 
--- Datos en Passenger
-INSERT INTO Passenger (Name, DateOfBirth, PassportNumber, Nationality, CustomerID) VALUES
-('José Álvarez', '1980-12-11', 'A1234567', 'Española', 1),
-('Isabel Martínez', '1992-03-20', 'B2345678', 'Española', 2),
-('Fernando López', '1985-06-25', 'C3456789', 'Española', 3),
-('Rosa González', '1978-11-09', 'D4567890', 'Española', 4),
-('Jorge Sánchez', '1990-04-15', 'E5678901', 'Española', 5),
-('Marta Gómez', '1983-07-28', 'F6789012', 'Española', 6),
-('Alberto Ruiz', '1987-09-14', 'G7890123', 'Española', 7),
-('Sonia Pérez', '1991-10-30', 'H8901234', 'Española', 8),
-('Manuel Fernández', '1984-01-20', 'I9012345', 'Española', 9),
-('Ana Belén Morales', '1993-02-17', 'J0123456', 'Española', 10);
-
-------------------------------------------------------------------------
-
 -- Datos en Role
 INSERT INTO Role (RoleName, Description) VALUES
 ('Piloto', 'Responsable de volar el avión'),
 ('Copiloto', 'Asiste al piloto en el vuelo'),
 ('Azafata', 'Atiende a los pasajeros durante el vuelo'),
-('Mecánico', 'Encargado del mantenimiento del avión'),
-('Operador de Ventas', 'Gestiona la venta de boletos'),
-('Agente de Check-in', 'Realiza el check-in de los pasajeros'),
-('Gerente de Aeropuerto', 'Supervisa las operaciones en el aeropuerto'),
-('Especialista en Seguridad', 'Asegura la seguridad en el aeropuerto'),
-('Administrador de Flotas', 'Gestiona la flota de aviones'),
 ('Asistente de Servicio a Bordo', 'Ofrece servicios a bordo del avión');
 
 ------------------------------------------------------------------------
 
 -- Datos en Employee
 INSERT INTO Employee (Name, DateOfBirth, HireDate, Salary, Status, RoleID) VALUES
-('Carlos Martínez', '1975-03-01', '2010-05-15', 3000.00, 'Activo', 1),
-('Laura Fernández', '1980-09-10', '2012-08-23', 2500.00, 'Activo', 2),
-('Juan Pérez', '1988-02-20', '2015-12-01', 2200.00, 'Activo', 3),
-('Sofía López', '1985-04-25', '2017-06-10', 2700.00, 'Activo', 4),
-('Antonio Gómez', '1990-11-11', '2018-03-18', 2900.00, 'Activo', 5),
-('Marta Rodríguez', '1982-07-30', '2019-09-05', 2600.00, 'Activo', 6),
-('Ricardo Sánchez', '1978-01-15', '2020-04-12', 2800.00, 'Activo', 7),
-('Isabel Morales', '1984-10-30', '2021-02-22', 3000.00, 'Activo', 8),
-('Javier Ramírez', '1992-06-18', '2022-07-16', 3100.00, 'Activo', 9),
-('Ana Ruiz', '1987-03-25', '2023-01-10', 3200.00, 'Activo', 10);
+('Carlos Martínez', '1975-03-01', '2010-05-15', 3000.00, 'Activo', 1), -- Piloto
+('Laura Fernández', '1980-09-10', '2012-08-23', 2500.00, 'Activo', 2), -- Copiloto
+('Juan Pérez', '1988-02-20', '2015-12-01', 2200.00, 'Activo', 3), -- Azafata
+('Sofía López', '1985-04-25', '2017-06-10', 2700.00, 'Activo', 4); -- Asistente de Servicio a Bordo
 
 ------------------------------------------------------------------------
 
 -- Datos en EmployeeFlightAssignment
-INSERT INTO EmployeeFlightAssignment (EmployeeID, FlightID, AssignedRole) VALUES
-(1, 1, 'Piloto'),
-(2, 1, 'Copiloto'),
-(3, 1, 'Azafata'),
-(4, 2, 'Azafata'),
-(5, 2, 'Operador de Ventas'),
-(6, 3, 'Agente de Check-in'),
-(7, 4, 'Especialista en Seguridad'),
-(8, 4, 'Mecánico'),
-(9, 5, 'Gerente de Aeropuerto'),
-(10, 5, 'Administrador de Flotas');
-
-------------------------------------------------------------------------
-
--- Datos en MaintenanceSchedule
-INSERT INTO MaintenanceSchedule (AirplaneID, ScheduledDate, MaintenanceType, Description, Status) VALUES
-(1, '2024-09-15', 'Revisión General', 'Revisión de sistemas y motores', 'Programado'),
-(2, '2024-10-20', 'Cambio de Aceite', 'Cambio de aceite y filtros', 'Programado'),
-(3, '2024-11-05', 'Revisión de Motores', 'Inspección de motores', 'Completado'),
-(4, '2024-12-10', 'Revisión de Aviónica', 'Revisión de sistemas aviónicos', 'Completado'),
-(5, '2025-01-15', 'Mantenimiento de Ruedas', 'Inspección y cambio de ruedas', 'En Progreso'),
-(6, '2025-02-20', 'Revisión de Sistemas de Combustible', 'Inspección de sistemas de combustible', 'Programado'),
-(7, '2025-03-10', 'Revisión de Estructura', 'Inspección estructural', 'Programado'),
-(8, '2025-04-25', 'Revisión de Cabina', 'Inspección de sistemas de cabina', 'Completado'),
-(9, '2025-05-30', 'Revisión de Sistemas de Navegación', 'Revisión de sistemas de navegación', 'En Progreso'),
-(10, '2025-06-15', 'Mantenimiento de Motor', 'Mantenimiento preventivo del motor', 'Programado');
+INSERT INTO EmployeeFlightAssignment (EmployeeID, FlightID) VALUES
+(1, 1), 
+(2, 1), 
+(3, 1), 
+(4, 1);
 
 ------------------------------------------------------------------------
 
@@ -974,12 +919,6 @@ INSERT INTO Service (ServiceType, Description) VALUES
 INSERT INTO InFlightService (FlightID, ServiceID, ProvidedByEmployeeID) VALUES
 (1, 1, 3),
 (1, 2, 4),
-(2, 1, 5),
-(2, 3, 6),
-(3, 2, 7),
-(3, 4, 8),
-(4, 1, 9),
-(4, 5, 10),
 (5, 3, 1),
 (5, 6, 2);
 
@@ -1040,11 +979,9 @@ SELECT * FROM AvailableSeat;
 SELECT * FROM Ticket;
 SELECT * FROM Coupon;
 SELECT * FROM PiecesOfLuggage;
-SELECT * FROM Passenger;
 SELECT * FROM Role;
 SELECT * FROM Employee;
 SELECT * FROM EmployeeFlightAssignment;
-SELECT * FROM MaintenanceSchedule;
 SELECT * FROM Service;
 SELECT * FROM InFlightService;
 SELECT * FROM Booking;
