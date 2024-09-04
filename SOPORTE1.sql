@@ -1,4 +1,4 @@
--- Usar la base de datos temporal para operaciones preliminares
+﻿-- Usar la base de datos temporal para operaciones preliminares
 USE tempdb;
 GO
 
@@ -45,6 +45,20 @@ CREATE TABLE Country (
 );
 GO
 
+-- índice para el campo CountryID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Country_CountryID')
+BEGIN
+    CREATE INDEX IX_Country_CountryID ON Country (CountryID);
+END;
+
+-- índice para el campo CountryName
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Country_CountryName')
+BEGIN
+    CREATE INDEX IX_Country_CountryName ON Country (CountryName);
+END;
+
+
+
 ------------------------------------------------------------------------
 
 -- Tabla Plane Model
@@ -58,6 +72,21 @@ CREATE TABLE PlaneModel (
     Graphic VARBINARY(MAX)
 );
 GO
+
+-- índice para el campo Description
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_PlaneModel_Description')
+BEGIN
+    CREATE INDEX IX_PlaneModel_Description ON PlaneModel (Description);
+END;
+
+-- Crear índice para el campo PlaneModelID
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_PlaneModel_PlaneModelID')
+BEGIN
+    CREATE INDEX IX_PlaneModel_PlaneModelID ON PlaneModel (PlaneModelID);
+END;
+
 
 ------------------------------------------------------------------------
 
@@ -153,6 +182,15 @@ CREATE TABLE City (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
+
+-- índice para  el campo CityName
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_City_CityName')
+BEGIN
+    CREATE INDEX IX_City_CityName ON City (CityName);
+END;
+
+
 ------------------------------------------------------------------------
 
 -- Tabla Document 
@@ -203,6 +241,20 @@ CREATE TABLE Airport (
 );
 GO
 
+-- índice para optimizar CountryID
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airport_CountryID')
+BEGIN
+    CREATE INDEX IX_Airport_CountryID ON Airport (CountryID);
+END;
+
+-- índice para el campo Name
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airport_Name')
+BEGIN
+    CREATE INDEX IX_Airport_Name ON Airport (Name);
+END;
+
 ------------------------------------------------------------------------
 
 -- Tabla Airplane
@@ -220,6 +272,21 @@ CREATE TABLE Airplane (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
+
+-- índice para el campo RegistrationNumber
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airplane_RegistrationNumber')
+BEGIN
+    CREATE INDEX IX_Airplane_RegistrationNumber ON Airplane (RegistrationNumber);
+END;
+
+
+-- índice para  el campo PlaneModID
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Airplane_PlaneModID')
+BEGIN
+    CREATE INDEX IX_Airplane_PlaneModID ON Airplane (PlaneModID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -268,6 +335,13 @@ IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_FlightNumber_Departure
 BEGIN
     CREATE INDEX IX_FlightNumber_DepartureTime ON FlightNumber (DepartureTime);
 END;
+
+-- índice para optimizar el campo Type
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_FlightNumber_Type')
+BEGIN
+    CREATE INDEX IX_FlightNumber_Type ON FlightNumber (Type);
+END;
+
 
 ------------------------------------------------------------------------
 
@@ -543,6 +617,14 @@ BEGIN
     CREATE INDEX IX_Booking_CustomerID ON Booking (CustomerID);
 END;
 
+-- índice para optimizar el campo BookingDate
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Booking_BookingDate')
+BEGIN
+    CREATE INDEX IX_Booking_BookingDate ON Booking (BookingDate);
+END;
+
+
 ------------------------------------------------------------------------
 
 -- Tabla Payment
@@ -564,6 +646,13 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Payment_BookingID')
 BEGIN
     CREATE INDEX IX_Payment_BookingID ON Payment (BookingID);
+END;
+
+-- índice para optimizar el campo PaymentDate
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Payment_PaymentDate')
+BEGIN
+    CREATE INDEX IX_Payment_PaymentDate ON Payment (PaymentDate);
 END;
 
 ------------------------------------------------------------------------
