@@ -5,7 +5,6 @@ GO
 -- Verificar si la base de datos existe y eliminarla si es necesario
 IF EXISTS (SELECT name FROM master.sys.databases WHERE name = N'soporte_AERO')
 BEGIN
-    ALTER DATABASE soporte_AERO SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
     DROP DATABASE soporte_AERO;
 END
 GO
@@ -14,7 +13,7 @@ GO
 CREATE DATABASE soporte_AERO;
 GO
 
--- Usar la base de datos reciÈn creada
+-- Usar la base de datos reciÔøΩn creada
 USE soporte_AERO;
 GO
 
@@ -90,22 +89,50 @@ GO
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
+-- Tabla categor√≠a de cliente
+IF OBJECT_ID('Customercategory', 'U') IS NOT NULL 
+DROP TABLE Customercategory;
+GO
 
--- Tabla Customer
+CREATE TABLE Customercategory (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL,
+    CONSTRAINT CHK_CustomerCategory_Name CHECK (category_name IN ('Regular', 'Frecuente'))
+);
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_CustomerCategory_Name')
+BEGIN
+    CREATE INDEX IX_CustomerCategory_Name ON customercategory (category_name);
+END;
+
+------------------------------------------------------------------------
+
+-- Tabla Cliente
 IF OBJECT_ID('Customer', 'U') IS NOT NULL 
 DROP TABLE Customer;
 GO
 
 CREATE TABLE Customer (
     CustomerID INT PRIMARY KEY IDENTITY(1,1),
-    DateOfBirth DATE CHECK (DateOfBirth <= GETDATE()),
+    DateOfBirth DATE CHECK (DateOfBirth <= GETDATE() AND DateOfBirth >= DATEADD(YEAR, -100, GETDATE())),
     Name VARCHAR(100) NOT NULL,
     FFCNumberID INT NULL,
+	CustomerCategoryID INT NULL,
     CONSTRAINT FK_Customer_FFCNumber FOREIGN KEY (FFCNumberID) REFERENCES FrequentFlyerCard(FFCNumber)
-        ON DELETE SET NULL ON UPDATE CASCADE
+        ON DELETE SET NULL, -- Permitir NULL si la tarjeta es eliminada
+	CONSTRAINT FK_Customer_Category FOREIGN KEY (CustomerCategoryID) REFERENCES Customercategory(id)
+        ON DELETE SET NULL ON UPDATE CASCADE -- Permitir NULL o Actualizar si la categor√≠a de cliente es eliminada o actualizada
 );
 GO
 
+-- Indice en la columna Name
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Customer_Name')
+BEGIN
+	CREATE INDEX IX_Customer_Name ON Customer (Name);
+END;
+
+-- Indice en la columna FFCNumberID
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Customer_FFCNumberID')
 BEGIN
     CREATE INDEX IX_Customer_FFCNumberID ON Customer (FFCNumberID);
@@ -113,7 +140,7 @@ END;
 
 ------------------------------------------------------------------------
 
--- Tabla City 
+-- Tabla Ciudad 
 IF OBJECT_ID('City', 'U') IS NOT NULL 
 DROP TABLE City;
 GO
@@ -126,7 +153,6 @@ CREATE TABLE City (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
-
 ------------------------------------------------------------------------
 
 -- Tabla Document 
@@ -140,11 +166,26 @@ CREATE TABLE Document (
     DocumentNumber VARCHAR(50) NOT NULL UNIQUE,
     IssueDate DATE NOT NULL,
     ExpiryDate DATE,
+    IssuingCountryID INT,
     CustomerID INT,
     CONSTRAINT FK_Document_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
-        ON DELETE CASCADE ON UPDATE CASCADE
+        ON DELETE CASCADE ON UPDATE CASCADE, -- Permite que los documentos se eliminen o actualicen junto con customer.
+    CONSTRAINT FK_Document_Country FOREIGN KEY (IssuingCountryID) REFERENCES Country(CountryID)
+        ON DELETE SET NULL -- Permitir NULL si el pa√≠s es eliminado
 );
 GO
+
+-- √çndice para DocumentType
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Document_DocumentType')
+BEGIN
+    CREATE INDEX IX_Document_DocumentType ON Document(DocumentType);
+END;
+
+-- √çndice para IssuingCountryID
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Document_IssuingCountryID')
+BEGIN
+    CREATE INDEX IX_Document_IssuingCountryID ON Document(IssuingCountryID);
+END;
 
 ------------------------------------------------------------------------
 
@@ -255,15 +296,35 @@ DROP TABLE AvailableSeat;
 GO
 
 CREATE TABLE AvailableSeat (
-    AvailableSeatID INT PRIMARY KEY IDENTITY(1,1),
     SeatID INT,
     FlightID INT,
+    CONSTRAINT PK_AvailableSeat PRIMARY KEY (SeatID, FlightID),
     CONSTRAINT FK_AvailableSeat_Seat FOREIGN KEY (SeatID) REFERENCES Seat(SeatID)
-        ON DELETE CASCADE ON UPDATE CASCADE,
+        ON DELETE CASCADE ON UPDATE CASCADE,  -- Eliminar o actualizar asiento afectado
     CONSTRAINT FK_AvailableSeat_Flight FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
-        ON DELETE CASCADE ON UPDATE CASCADE
+        ON DELETE CASCADE ON UPDATE CASCADE   -- Eliminar o actualizar vuelo afectado
 );
 GO
+
+------------------------------------------------------------------------
+
+-- Tabla categor√≠a de boleto
+IF OBJECT_ID('ticketcategory', 'U') IS NOT NULL 
+DROP TABLE ticketcategory;
+GO
+
+CREATE TABLE ticketcategory (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL,
+    CONSTRAINT CHK_TicketCategory_Name CHECK (category_name IN ('Primera clase', 'Ejecutiva', 'Premium', 'Econ√≥mica'))
+);
+GO
+
+-- √çndice para category_name
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_TicketCategory_Name')
+BEGIN
+    CREATE INDEX IX_TicketCategory_Name ON ticketcategory (category_name);
+END;
 
 ------------------------------------------------------------------------
 
@@ -273,45 +334,62 @@ DROP TABLE Ticket;
 GO
 
 CREATE TABLE Ticket (
-    TicketID INT PRIMARY KEY IDENTITY(1,1),
-    TicketingCode VARCHAR(50) NOT NULL,
+    TicketingCode INT IDENTITY(1,1) PRIMARY KEY,
     Number INT NOT NULL CHECK (Number > 0),
     CustomerID INT,
+	TicketCategoryID INT,
     CONSTRAINT FK_Ticket_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
-        ON DELETE CASCADE ON UPDATE CASCADE
+        ON DELETE CASCADE ON UPDATE CASCADE,-- Eliminar o actualiza dependiendo al cliente
+    CONSTRAINT FK_Ticket_TicketCategory FOREIGN KEY (TicketCategoryID) REFERENCES ticketcategory(id)
+        ON DELETE SET NULL ON UPDATE CASCADE -- Permitir NULL o Actualizar si la categor√≠a del ticket es eliminada o actualizada
 );
 GO
 
+-- √çndice en CustomerID
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Ticket_CustomerID')
 BEGIN
     CREATE INDEX IX_Ticket_CustomerID ON Ticket (CustomerID);
 END;
 
+-- √çndice en Number
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Ticket_Number')
+BEGIN
+    CREATE INDEX IX_Ticket_Number ON Ticket (CustomerID);
+END;
+
 ------------------------------------------------------------------------
 
--- Tabla Coupon
+-- Tabla cup√≥n
 IF OBJECT_ID('Coupon', 'U') IS NOT NULL 
 DROP TABLE Coupon;
 GO
 
---  tabla Coupon 
 CREATE TABLE Coupon (
     CouponID INT PRIMARY KEY IDENTITY(1,1),
     DateOfRedemption DATE,
     Class VARCHAR(50) CHECK (Class IN ('Economica', 'Ejecutiva', 'Turista')),
-    Standby VARCHAR(50) CHECK (Standby IN ('SÌ', 'No')),
+    Standby VARCHAR(50) CHECK (Standby IN ('Si', 'No')),
     MealCode VARCHAR(50),
     TicketID INT,
     FlightID INT,
-    AvailableSeatID INT,
-    CONSTRAINT FK_Coupon_Ticket FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
+    CONSTRAINT FK_Coupon_Ticket FOREIGN KEY (TicketID) REFERENCES Ticket(TicketingCode)
         ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT FK_Coupon_Flight FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
         ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT FK_Coupon_AvailableSeat FOREIGN KEY (AvailableSeatID) REFERENCES AvailableSeat(AvailableSeatID)
-        ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 GO
+
+-- Indice en Class
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Coupon_Class')
+BEGIN
+    CREATE INDEX IX_Coupon_Class ON Coupon (Class);
+END;
+
+-- Indice en Standby
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_Coupon_Standby')
+BEGIN
+    CREATE INDEX IX_Coupon_Standby ON Coupon (Standby);
+END;
 
 ------------------------------------------------------------------------
 
@@ -329,6 +407,18 @@ CREATE TABLE PiecesOfLuggage (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
+
+-- Indice en Number
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_PiecesOfLuggage_Number')
+BEGIN
+    CREATE INDEX IX_PiecesOfLuggage_Number ON PiecesOfLuggage (Number);
+END;
+
+-- Indice en Weight
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_PiecesOfLuggage_Weight')
+BEGIN
+    CREATE INDEX IX_PiecesOfLuggage_Weight ON PiecesOfLuggage (Weight);
+END;
 
 ------------------------------------------------------------------------
 
@@ -494,24 +584,31 @@ INSERT INTO FrequentFlyerCard (FFCNumber, Miles, MealCode) VALUES
 
 ------------------------------------------------------------------------
 
--- datos en Customer
-INSERT INTO Customer (DateOfBirth, Name, FFCNumberID) VALUES
-('1985-06-15', 'Juan PÈrez', 1001),
-('1990-04-22', 'Ana GÛmez', 1002),
-('1982-09-10', 'Carlos MartÌnez', 1003),
-('1995-12-05', 'MarÌa Fern·ndez', 1004),
-('1988-07-19', 'Luis RodrÌguez', 1005),
-('1993-11-13', 'Laura S·nchez', 1006),
-('1979-03-09', 'Pedro LÛpez', 1007),
-('1987-08-21', 'SofÌa Torres', 1008),
-('1991-05-30', 'Ricardo RamÌrez', 1009),
-('1994-10-11', 'Elena Morales', 1010);
+-- datos en Customercategory
+INSERT INTO Customercategory (category_name) VALUES
+('Regular'),
+('Frecuente');
 
 ------------------------------------------------------------------------
 
---  datos en Country
+-- datos en Customer
+INSERT INTO Customer (DateOfBirth, Name, FFCNumberID, CustomerCategoryID) VALUES
+('1985-06-15', 'Juan P√©rez', 1001, 1),  -- Asumiendo que el ID 1 corresponde a 'Regular'
+('1990-04-22', 'Ana G√≥mez', 1002, 2),  -- Asumiendo que el ID 2 corresponde a 'Frecuente'
+('1982-09-10', 'Carlos Mart√≠nez', 1003, 1),
+('1995-12-05', 'Mar√≠a Fern√°ndez', 1004, 2),
+('1988-07-19', 'Luis Rodr√≠guez', 1005, 1),
+('1993-11-13', 'Laura S√°nchez', 1006, 2),
+('1979-03-09', 'Pedro L√≥pez', 1007, 1),
+('1987-08-21', 'Sof√≠a Torres', 1008, 2),
+('1991-05-30', 'Ricardo Ram√≠rez', 1009, 1),
+('1994-10-11', 'Elena Morales', 1010, 2);
+
+------------------------------------------------------------------------
+
+-- Datos en Country
 INSERT INTO Country (CountryName) VALUES
-('EspaÒa'),
+('Espa√±a'),
 ('Francia'),
 ('Alemania'),
 ('Italia'),
@@ -519,27 +616,27 @@ INSERT INTO Country (CountryName) VALUES
 
 ------------------------------------------------------------------------
 
---  datos en City
+-- Datos en City
 INSERT INTO City (CityName, CountryID) VALUES
 ('Madrid', 1),
 ('Barcelona', 1),
 ('Sevilla', 1),
-('ParÌs', 2),
+('Par√≠s', 2),
 ('Lyon', 2),
-('BerlÌn', 3),
-('M˙nich', 3),
+('Berl√≠n', 3),
+('M√∫nich', 3),
 ('Roma', 4),
-('Mil·n', 4),
+('Mil√°n', 4),
 ('Lisboa', 5);
 
 ------------------------------------------------------------------------
 
---datos en Airport
+-- Datos en Airport
 INSERT INTO Airport (Name, CountryID) VALUES
 ('Aeropuerto Internacional de Madrid', 1),
 ('Aeropuerto de Barcelona-El Prat', 1),
 ('Aeropuerto de Valencia', 1),
-('Aeropuerto de M·laga-Costa del Sol', 1),
+('Aeropuerto de M√°laga-Costa del Sol', 1),
 ('Aeropuerto de Sevilla', 1),
 ('Aeropuerto de Bilbao', 1),
 ('Aeropuerto de Alicante', 1),
@@ -599,7 +696,7 @@ INSERT INTO FlightNumber (DepartureTime, Description, Type, Airline, StartAirpor
 ('2024-08-04 10:00:00', 'Vuelo a Madrid', 'Internacional', 'Iberia', 1, 2, 1),
 ('2024-08-04 14:00:00', 'Vuelo a Barcelona', 'Nacional', 'Vueling', 2, 3, 2),
 ('2024-08-04 16:00:00', 'Vuelo a Valencia', 'Nacional', 'Air Europa', 3, 4, 3),
-('2024-08-04 18:00:00', 'Vuelo a M·laga', 'Nacional', 'Ryanair', 4, 5, 4),
+('2024-08-04 18:00:00', 'Vuelo a MÔøΩlaga', 'Nacional', 'Ryanair', 4, 5, 4),
 ('2024-08-04 20:00:00', 'Vuelo a Sevilla', 'Nacional', 'Iberia', 5, 6, 5),
 ('2024-08-06 08:00:00', 'Vuelo a Bilbao', 'Nacional', 'Vueling', 6, 7, 6),
 ('2024-08-06 11:00:00', 'Vuelo a Alicante', 'Nacional', 'Air Europa', 7, 8, 7),
@@ -639,33 +736,43 @@ INSERT INTO AvailableSeat (SeatID, FlightID) VALUES
 
 ------------------------------------------------------------------------
 
---  datos en Ticket
-INSERT INTO Ticket (TicketingCode, Number, CustomerID) VALUES
-('TK1001', 12345, 1),
-('TK1002', 12346, 2),
-('TK1003', 12347, 3),
-('TK1004', 12348, 4),
-('TK1005', 12349, 5),
-('TK1006', 12350, 6),
-('TK1007', 12351, 7),
-('TK1008', 12352, 8),
-('TK1009', 12353, 9),
-('TK1010', 12354, 10);
+-- datos en ticketcategory
+INSERT INTO ticketcategory (category_name) VALUES
+('Primera clase'),
+('Ejecutiva'),
+('Premium'),
+('Econ√≥mica');
 
 ------------------------------------------------------------------------
 
---  datos en Coupon
-INSERT INTO Coupon (DateOfRedemption, Class, Standby, MealCode, TicketID, FlightID, AvailableSeatID) VALUES
-('2024-08-03', 'Economica', 'No', 'A-b', 1, 1, 1),
-('2024-08-04', 'Ejecutiva', 'SÌ', 'B-c', 2, 2, 2),
-('2024-08-03', 'Turista', 'No', 'C-d', 3, 3, 3),
-('2024-08-02', 'Economica', 'SÌ', 'A-ba', 4, 4, 4),
-('2024-08-05', 'Ejecutiva', 'No', 'B-ca', 5, 5, 5),
-('2024-08-05', 'Turista', 'SÌ', 'C-ba', 6, 6, 6),
-('2024-08-02', 'Economica', 'No', 'A-bai', 7, 7, 7),
-('2024-08-01', 'Ejecutiva', 'SÌ', 'B-cai', 8, 8, 8),
-('2024-08-01', 'Turista', 'No', 'C-bai', 9, 9, 9),
-('2024-07-31', 'Economica', 'SÌ', 'A-baio', 10, 10, 10);
+-- Datos en Ticket
+INSERT INTO Ticket (Number, CustomerID, TicketCategoryID) VALUES
+(12345, 1, 1), -- Asumiendo que 'Primera clase' tiene id 1
+(12346, 2, 2), -- Asumiendo que 'Ejecutiva' tiene id 2
+(12347, 3, 3), -- Asumiendo que 'Premium' tiene id 3
+(12348, 4, 4), -- Asumiendo que 'Econ√≥mica' tiene id 4
+(12349, 5, 1),
+(12350, 6, 2),
+(12351, 7, 3),
+(12352, 8, 4),
+(12353, 9, 1),
+(12354, 10, 2);
+
+------------------------------------------------------------------------
+
+--  Datos en Coupon
+INSERT INTO Coupon (DateOfRedemption, Class, Standby, MealCode, TicketID, FlightID) VALUES
+('2024-08-03', 'Economica', 'No', 'A-b', 1, 1),
+('2024-08-04', 'Ejecutiva', 'Si', 'B-c', 2, 2),
+('2024-08-03', 'Turista', 'No', 'C-d', 3, 3),
+('2024-08-02', 'Economica', 'Si', 'A-ba', 4, 4),
+('2024-08-05', 'Ejecutiva', 'No', 'B-ca', 5, 5),
+('2024-08-05', 'Turista', 'Si', 'C-ba', 6, 6),
+('2024-08-02', 'Economica', 'No', 'A-bai', 7, 7),
+('2024-08-01', 'Ejecutiva', 'Si', 'B-cai', 8, 8),
+('2024-08-01', 'Turista', 'No', 'C-bai', 9, 9),
+('2024-07-31', 'Economica', 'Si', 'A-baio', 10, 10);
+
 
 ------------------------------------------------------------------------
 
@@ -684,52 +791,52 @@ INSERT INTO PiecesOfLuggage (Number, Weight, CouponID) VALUES
 
 ------------------------------------------------------------------------
 
---  datos en Passenger
+-- Datos en Passenger
 INSERT INTO Passenger (Name, DateOfBirth, PassportNumber, Nationality, CustomerID) VALUES
-('JosÈ ¡lvarez', '1980-12-11', 'A1234567', 'EspaÒola', 1),
-('Isabel MartÌnez', '1992-03-20', 'B2345678', 'EspaÒola', 2),
-('Fernando LÛpez', '1985-06-25', 'C3456789', 'EspaÒola', 3),
-('Rosa Gonz·lez', '1978-11-09', 'D4567890', 'EspaÒola', 4),
-('Jorge S·nchez', '1990-04-15', 'E5678901', 'EspaÒola', 5),
-('Marta GÛmez', '1983-07-28', 'F6789012', 'EspaÒola', 6),
-('Alberto Ruiz', '1987-09-14', 'G7890123', 'EspaÒola', 7),
-('Sonia PÈrez', '1991-10-30', 'H8901234', 'EspaÒola', 8),
-('Manuel Fern·ndez', '1984-01-20', 'I9012345', 'EspaÒola', 9),
-('Ana BelÈn Morales', '1993-02-17', 'J0123456', 'EspaÒola', 10);
+('Jos√© √Ålvarez', '1980-12-11', 'A1234567', 'Espa√±ola', 1),
+('Isabel Mart√≠nez', '1992-03-20', 'B2345678', 'Espa√±ola', 2),
+('Fernando L√≥pez', '1985-06-25', 'C3456789', 'Espa√±ola', 3),
+('Rosa Gonz√°lez', '1978-11-09', 'D4567890', 'Espa√±ola', 4),
+('Jorge S√°nchez', '1990-04-15', 'E5678901', 'Espa√±ola', 5),
+('Marta G√≥mez', '1983-07-28', 'F6789012', 'Espa√±ola', 6),
+('Alberto Ruiz', '1987-09-14', 'G7890123', 'Espa√±ola', 7),
+('Sonia P√©rez', '1991-10-30', 'H8901234', 'Espa√±ola', 8),
+('Manuel Fern√°ndez', '1984-01-20', 'I9012345', 'Espa√±ola', 9),
+('Ana Bel√©n Morales', '1993-02-17', 'J0123456', 'Espa√±ola', 10);
 
 ------------------------------------------------------------------------
 
---  datos en Role
+-- Datos en Role
 INSERT INTO Role (RoleName, Description) VALUES
-('Piloto', 'Responsable de volar el aviÛn'),
+('Piloto', 'Responsable de volar el avi√≥n'),
 ('Copiloto', 'Asiste al piloto en el vuelo'),
 ('Azafata', 'Atiende a los pasajeros durante el vuelo'),
-('Mec·nico', 'Encargado del mantenimiento del aviÛn'),
+('Mec√°nico', 'Encargado del mantenimiento del avi√≥n'),
 ('Operador de Ventas', 'Gestiona la venta de boletos'),
 ('Agente de Check-in', 'Realiza el check-in de los pasajeros'),
 ('Gerente de Aeropuerto', 'Supervisa las operaciones en el aeropuerto'),
 ('Especialista en Seguridad', 'Asegura la seguridad en el aeropuerto'),
 ('Administrador de Flotas', 'Gestiona la flota de aviones'),
-('Asistente de Servicio a Bordo', 'Ofrece servicios a bordo del aviÛn');
+('Asistente de Servicio a Bordo', 'Ofrece servicios a bordo del avi√≥n');
 
 ------------------------------------------------------------------------
 
---  datos en Employee
+-- Datos en Employee
 INSERT INTO Employee (Name, DateOfBirth, HireDate, Salary, Status, RoleID) VALUES
-('Carlos MartÌnez', '1975-03-01', '2010-05-15', 3000.00, 'Activo', 1),
-('Laura Fern·ndez', '1980-09-10', '2012-08-23', 2500.00, 'Activo', 2),
-('Juan PÈrez', '1988-02-20', '2015-12-01', 2200.00, 'Activo', 3),
-('SofÌa LÛpez', '1985-04-25', '2017-06-10', 2700.00, 'Activo', 4),
-('Antonio GÛmez', '1990-11-11', '2018-03-18', 2900.00, 'Activo', 5),
-('Marta RodrÌguez', '1982-07-30', '2019-09-05', 2600.00, 'Activo', 6),
-('Ricardo S·nchez', '1978-01-15', '2020-04-12', 2800.00, 'Activo', 7),
+('Carlos Mart√≠nez', '1975-03-01', '2010-05-15', 3000.00, 'Activo', 1),
+('Laura Fern√°ndez', '1980-09-10', '2012-08-23', 2500.00, 'Activo', 2),
+('Juan P√©rez', '1988-02-20', '2015-12-01', 2200.00, 'Activo', 3),
+('Sof√≠a L√≥pez', '1985-04-25', '2017-06-10', 2700.00, 'Activo', 4),
+('Antonio G√≥mez', '1990-11-11', '2018-03-18', 2900.00, 'Activo', 5),
+('Marta Rodr√≠guez', '1982-07-30', '2019-09-05', 2600.00, 'Activo', 6),
+('Ricardo S√°nchez', '1978-01-15', '2020-04-12', 2800.00, 'Activo', 7),
 ('Isabel Morales', '1984-10-30', '2021-02-22', 3000.00, 'Activo', 8),
-('Javier RamÌrez', '1992-06-18', '2022-07-16', 3100.00, 'Activo', 9),
+('Javier Ram√≠rez', '1992-06-18', '2022-07-16', 3100.00, 'Activo', 9),
 ('Ana Ruiz', '1987-03-25', '2023-01-10', 3200.00, 'Activo', 10);
 
 ------------------------------------------------------------------------
 
--- datos en EmployeeFlightAssignment
+-- Datos en EmployeeFlightAssignment
 INSERT INTO EmployeeFlightAssignment (EmployeeID, FlightID, AssignedRole) VALUES
 (1, 1, 'Piloto'),
 (2, 1, 'Copiloto'),
@@ -738,36 +845,36 @@ INSERT INTO EmployeeFlightAssignment (EmployeeID, FlightID, AssignedRole) VALUES
 (5, 2, 'Operador de Ventas'),
 (6, 3, 'Agente de Check-in'),
 (7, 4, 'Especialista en Seguridad'),
-(8, 4, 'Mec·nico'),
+(8, 4, 'Mec√°nico'),
 (9, 5, 'Gerente de Aeropuerto'),
 (10, 5, 'Administrador de Flotas');
 
 ------------------------------------------------------------------------
 
---  datos en MaintenanceSchedule
+-- Datos en MaintenanceSchedule
 INSERT INTO MaintenanceSchedule (AirplaneID, ScheduledDate, MaintenanceType, Description, Status) VALUES
-(1, '2024-09-15', 'RevisiÛn General', 'RevisiÛn de sistemas y motores', 'Programado'),
+(1, '2024-09-15', 'Revisi√≥n General', 'Revisi√≥n de sistemas y motores', 'Programado'),
 (2, '2024-10-20', 'Cambio de Aceite', 'Cambio de aceite y filtros', 'Programado'),
-(3, '2024-11-05', 'RevisiÛn de Motores', 'InspecciÛn de motores', 'Completado'),
-(4, '2024-12-10', 'RevisiÛn de AviÛnica', 'RevisiÛn de sistemas avionicos', 'Completado'),
-(5, '2025-01-15', 'Mantenimiento de Ruedas', 'InspecciÛn y cambio de ruedas', 'En Progreso'),
-(6, '2025-02-20', 'RevisiÛn de Sistemas de Combustible', 'InspecciÛn de sistemas de combustible', 'Programado'),
-(7, '2025-03-10', 'RevisiÛn de Estructura', 'InspecciÛn estructural', 'Programado'),
-(8, '2025-04-25', 'RevisiÛn de Cabina', 'InspecciÛn de sistemas de cabina', 'Completado'),
-(9, '2025-05-30', 'RevisiÛn de Sistemas de NavegaciÛn', 'RevisiÛn de sistemas de navegaciÛn', 'En Progreso'),
+(3, '2024-11-05', 'Revisi√≥n de Motores', 'Inspecci√≥n de motores', 'Completado'),
+(4, '2024-12-10', 'Revisi√≥n de Avi√≥nica', 'Revisi√≥n de sistemas avi√≥nicos', 'Completado'),
+(5, '2025-01-15', 'Mantenimiento de Ruedas', 'Inspecci√≥n y cambio de ruedas', 'En Progreso'),
+(6, '2025-02-20', 'Revisi√≥n de Sistemas de Combustible', 'Inspecci√≥n de sistemas de combustible', 'Programado'),
+(7, '2025-03-10', 'Revisi√≥n de Estructura', 'Inspecci√≥n estructural', 'Programado'),
+(8, '2025-04-25', 'Revisi√≥n de Cabina', 'Inspecci√≥n de sistemas de cabina', 'Completado'),
+(9, '2025-05-30', 'Revisi√≥n de Sistemas de Navegaci√≥n', 'Revisi√≥n de sistemas de navegaci√≥n', 'En Progreso'),
 (10, '2025-06-15', 'Mantenimiento de Motor', 'Mantenimiento preventivo del motor', 'Programado');
 
 ------------------------------------------------------------------------
 
---  datos en Service
+-- Datos en Service
 INSERT INTO Service (ServiceType, Description) VALUES
 ('Comida', 'Servicio de comida a bordo'),
 ('Bebida', 'Servicio de bebidas a bordo'),
 ('Entretenimiento', 'Sistema de entretenimiento a bordo'),
-('Wi-Fi', 'ConexiÛn a Internet durante el vuelo'),
-('Asistencia MÈdica', 'AtenciÛn mÈdica en caso de emergencias'),
-('AcompaÒamiento', 'AcompaÒamiento para menores de edad'),
-('Cargador de Dispositivos', 'Cargador para dispositivos electrÛnicos'),
+('Wi-Fi', 'Conexi√≥n a Internet durante el vuelo'),
+('Asistencia M√©dica', 'Atenci√≥n m√©dica en caso de emergencias'),
+('Acompa√±amiento', 'Acompa√±amiento para menores de edad'),
+('Cargador de Dispositivos', 'Cargador para dispositivos electr√≥nicos'),
 ('Kit de Higiene', 'Kit de higiene personal'),
 ('Almohada', 'Almohada para comodidad durante el vuelo'),
 ('Cobija', 'Cobija para mayor confort');
@@ -804,28 +911,29 @@ INSERT INTO Booking (BookingDate, Status, CustomerID, FlightID) VALUES
 
 ------------------------------------------------------------------------
 
--- datos en Payment
+-- Datos en Payment
 INSERT INTO Payment (Amount, PaymentDate, PaymentMethod, BookingID) VALUES
-(150.00, '2024-08-01', 'Tarjeta de CrÈdito', 1),
+(150.00, '2024-08-01', 'Tarjeta de Cr√©dito', 1),
 (200.00, '2024-08-02', 'Efectivo', 2),
-(180.00, '2024-08-03', 'Tarjeta de DÈbito', 3),
-(220.00, '2024-08-04', 'Tarjeta de CrÈdito', 4),
+(180.00, '2024-08-03', 'Tarjeta de D√©bito', 3),
+(220.00, '2024-08-04', 'Tarjeta de Cr√©dito', 4),
 (250.00, '2024-08-05', 'Efectivo', 5),
-(170.00, '2024-08-06', 'Tarjeta de CrÈdito', 6),
+(170.00, '2024-08-06', 'Tarjeta de Cr√©dito', 6),
 (160.00, '2024-08-07', 'Efectivo', 7),
-(190.00, '2024-08-08', 'Tarjeta de DÈbito', 8),
-(210.00, '2024-08-09', 'Tarjeta de CrÈdito', 9),
+(190.00, '2024-08-08', 'Tarjeta de D√©bito', 8),
+(210.00, '2024-08-09', 'Tarjeta de Cr√©dito', 9),
 (230.00, '2024-08-10', 'Efectivo', 10);
 
 ------------------------------------------------------------------------
 
 -- datos en Document
-INSERT INTO Document (DocumentType, DocumentNumber, IssueDate, ExpiryDate, CustomerID) VALUES
-('Pasaporte', '123456789', '2020-01-01', '2030-01-01', 1),
-('Licencia de Conducir', '987654321', '2018-05-05', '2028-05-05', 2),
-('ID Nacional', '564738291', '2019-03-03', NULL, 3),
-('Pasaporte', '192837465', '2021-02-02', '2031-02-02', 4),
-('Licencia de Conducir', '817263545', '2017-07-07', '2027-07-07', 5);
+INSERT INTO Document (DocumentType, DocumentNumber, IssueDate, ExpiryDate, IssuingCountryID, CustomerID) VALUES
+('Pasaporte', '123456789', '2020-01-01', '2030-01-01', 1, 1), -- Pa√≠s: Espa√±a
+('Licencia de Conducir', '987654321', '2018-05-05', '2028-05-05', 2, 2), -- Pa√≠s: Francia
+('ID Nacional', '564738291', '2019-03-03', NULL, 3, 3),              -- Pa√≠s: Alemania
+('Pasaporte', '192837465', '2021-02-02', '2031-02-02', 4, 4),        -- Pa√≠s: Italia
+('Licencia de Conducir', '817263545', '2017-07-07', '2027-07-07', 5, 5); -- Pa√≠s: Portugal
+
 
 ------------------------------------------------------------------------
 ------------------------------------------------------------------------
