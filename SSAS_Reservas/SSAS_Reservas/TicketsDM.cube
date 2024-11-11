@@ -1,0 +1,343 @@
+﻿<Cube xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="9b75deef-2f3a-42a8-89d4-078be893ca2c" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>TicketsDM</ID>
+  <Name>TicketsDM</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+      <Value>
+        <dds xmlns="">
+          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="6" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-7339" scrolltop="-808" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="15409" y="11070" backcolor="2039583" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="1" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
+            <font>
+              <ddsxmlobjectstreamwrapper binary="010000009001b0300100065461686f6d61" />
+            </font>
+            <mouseicon>
+              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
+            </mouseicon>
+          </diagram>
+          <layoutmanager>
+            <ddsxmlobj />
+          </layoutmanager>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="hecho_tickets" left="20" top="4347" logicalid="1" controlid="1" masterid="0" hint1="0" hint2="0" width="4318" height="3387" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="000e0000de1000003b0d0000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_hecho_tickets" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="DimCategoriaTicket" left="454" top="0" logicalid="2" controlid="2" masterid="0" hint1="0" hint2="0" width="3450" height="1947" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="000e00007a0d00009b070000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_DimCategoriaTicket" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+          <ddscontrol controlprogid="MSDDS.Polyline.080.1" left="1780" top="1448" logicalid="3" controlid="3" masterid="0" hint1="0" hint2="0" width="799" height="3199" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobj>
+                <polyline endtypedst="6" endtypesrc="3" usercolor="16448250" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" />
+              </ddsxmlobj>
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dataSet.Relations[FK__hecho_tic__IDCat__59FA5E80]" vartype="8" />
+                <property name="Virtual" value="0" vartype="11" />
+                <property name="VisibleAP" value="0" vartype="3" />
+              </ddsxmlobj>
+            </layoutobject>
+            <connector lineroutestyle="MSDDS.Rectilinear" sourceid="2" destid="1" sourceattachpoint="5" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="0" relatedid="0" virtual="0">
+              <point x="2179" y="1947" />
+              <point x="2179" y="4347" />
+            </connector>
+          </ddscontrol>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="DimMetodoPago" left="-5558" top="4081" logicalid="4" controlid="4" masterid="0" hint1="0" hint2="0" width="3323" height="1842" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="000e0000fb0c000032070000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_DimMetodoPago" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+          <ddscontrol controlprogid="MSDDS.Polyline.080.1" left="-2535" top="4640" logicalid="5" controlid="5" masterid="0" hint1="0" hint2="0" width="2855" height="1312" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobj>
+                <polyline endtypedst="6" endtypesrc="3" usercolor="16448250" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" />
+              </ddsxmlobj>
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dataSet.Relations[FK__hecho_tic__IDMet__59063A47]" vartype="8" />
+                <property name="Virtual" value="0" vartype="11" />
+                <property name="VisibleAP" value="0" vartype="3" />
+              </ddsxmlobj>
+            </layoutobject>
+            <connector lineroutestyle="MSDDS.Rectilinear" sourceid="4" destid="1" sourceattachpoint="15" destattachpoint="14" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="0" relatedid="0" virtual="0">
+              <point x="-2235" y="5552" />
+              <point x="-653" y="5552" />
+              <point x="-653" y="4940" />
+              <point x="20" y="4940" />
+            </connector>
+          </ddscontrol>
+        </dds>
+      </Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>-7339</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>-808</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>-5558</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Dimensions>
+    <Dimension dwd:design-time-name="d3b03ad5-1ee9-4661-a71a-2adb6ed8902f">
+      <ID>Dim Categoria Ticket</ID>
+      <Name>Dim Categoria Ticket</Name>
+      <DimensionID>Dim Categoria Ticket</DimensionID>
+      <Attributes>
+        <Attribute dwd:design-time-name="cc1556ee-66dc-414b-9c53-338180497fb5">
+          <AttributeID>ID Categoria Ticket</AttributeID>
+        </Attribute>
+      </Attributes>
+    </Dimension>
+    <Dimension dwd:design-time-name="e3588ed7-825c-4028-919b-0b66f5e37140">
+      <ID>Dim Metodo Pago</ID>
+      <Name>Dim Metodo Pago</Name>
+      <DimensionID>Dim Metodo Pago</DimensionID>
+      <Attributes>
+        <Attribute dwd:design-time-name="19192b32-efe3-4332-8f54-31b9fbaab553">
+          <AttributeID>ID Metodo Pago</AttributeID>
+        </Attribute>
+      </Attributes>
+    </Dimension>
+    <Dimension dwd:design-time-name="101d67f5-4d06-4945-a135-e129ab34084d">
+      <ID>DimTiempo</ID>
+      <Name>DimTiempo</Name>
+      <DimensionID>DimTiempo</DimensionID>
+      <Attributes>
+        <Attribute dwd:design-time-name="12148e44-cc4c-462c-bfb1-34e0bb5af494">
+          <AttributeID>Fecha</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="d9a42958-3e71-4d0c-8289-7fa005ccb779">
+          <AttributeID>Año</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="8f7d1334-a260-4f5a-9904-bd0f61bbe71f">
+          <AttributeID>Semestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="83e1441d-33c3-4d1a-ad1f-566b43e3ba22">
+          <AttributeID>Trimestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="b28a1ef7-fca9-4ce2-887e-b53708c8d376">
+          <AttributeID>Mes</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="8625b8b5-fd2c-4a72-893f-19caab7ed767">
+          <AttributeID>Semana</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="7efa9309-d96b-49b9-83ec-48349fa8597a">
+          <AttributeID>Día Del Año</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="8b7c1f7d-d067-4560-bcce-9875f418afa2">
+          <AttributeID>Día Del Semestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="89a7ab02-f38a-42b4-8af6-7465a36cde82">
+          <AttributeID>Día Del Trimestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="f1bd7070-5f5c-4b98-8fdc-c09f8574a88f">
+          <AttributeID>Día Del Mes</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="1bf26c71-7e3f-4170-9268-07b9566cd6b4">
+          <AttributeID>Día De La Semana</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="0c17853b-be25-4cdf-a0ff-4ab2ac91f1f0">
+          <AttributeID>Semana Del Año</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="9ebc2651-2ec9-4fa2-9745-3cf4f33f7a14">
+          <AttributeID>Mes Del Año</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="e28d08d7-2673-49a7-872b-b025e5dd375e">
+          <AttributeID>Mes Del Semestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="99405f6e-137f-4d01-b72a-075fd053184e">
+          <AttributeID>Mes Del Trimestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="f5627c29-e400-4030-8882-0e54587f5439">
+          <AttributeID>Trimestre Del Año</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="c6e13400-22ac-4f2e-bff5-61da26a67918">
+          <AttributeID>Trimestre Del Semestre</AttributeID>
+        </Attribute>
+        <Attribute dwd:design-time-name="0d46e16c-d1b7-483d-becc-2e0a93e56ddb">
+          <AttributeID>Semestre Del Año</AttributeID>
+        </Attribute>
+      </Attributes>
+      <Hierarchies>
+        <Hierarchy dwd:design-time-name="88a87302-a9f0-4338-9efd-0f95e6957be3">
+          <HierarchyID>Año -  Semestre -  Trimestre -  Mes -  Fecha</HierarchyID>
+        </Hierarchy>
+        <Hierarchy dwd:design-time-name="83a827bb-04e9-4c79-876c-29ffb50b8d10">
+          <HierarchyID>Año -  Semana -  Fecha</HierarchyID>
+        </Hierarchy>
+      </Hierarchies>
+    </Dimension>
+  </Dimensions>
+  <MeasureGroups>
+    <MeasureGroup dwd:design-time-name="8a1ef0b0-0e8a-4d5d-b063-f4c1f896b520">
+      <ID>Hecho Tickets</ID>
+      <Name>Hecho Tickets</Name>
+      <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+      <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+      <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+      <State>Unprocessed</State>
+      <Measures>
+        <Measure dwd:design-time-name="145acbad-4236-4b3d-be64-8e31737ce7d5">
+          <ID>Precio Ticket</ID>
+          <Name>Precio Ticket</Name>
+          <Source dwd:design-time-name="bfcadd10-9d58-4caf-b9f5-408b18d0977c">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="2af7ec84-203f-42c3-8275-2adf61af1968">
+              <TableID>dbo_hecho_tickets</TableID>
+              <ColumnID>PrecioTicket</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="e839abc5-a03d-4c08-a25f-55243a47d0cb">
+          <ID>Peso Total Equipaje</ID>
+          <Name>Peso Total Equipaje</Name>
+          <Source dwd:design-time-name="3476063f-84fd-48f0-b0a7-be9f98db520c">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="ca1e8a03-c855-404f-b36b-82be37e1b526">
+              <TableID>dbo_hecho_tickets</TableID>
+              <ColumnID>PesoTotalEquipaje</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="bdb73ace-7ac5-470b-b742-a0ce35afb934">
+          <ID>Cantidad Piezas Equipaje</ID>
+          <Name>Cantidad Piezas Equipaje</Name>
+          <Source dwd:design-time-name="695fdd60-b410-4e21-a295-d9496e2ef754">
+            <DataType>Integer</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="6bd58eee-68a9-439a-b7b3-59a3c03d04d4">
+              <TableID>dbo_hecho_tickets</TableID>
+              <ColumnID>CantidadPiezasEquipaje</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="0d97ccb8-31df-45c2-b76d-f964eb79743b">
+          <ID>Recuento Hecho Tickets</ID>
+          <Name>Recuento Hecho Tickets</Name>
+          <AggregateFunction>Count</AggregateFunction>
+          <Source dwd:design-time-name="b1821db9-ac51-4786-b069-4255964f55dd">
+            <DataType>Integer</DataType>
+            <DataSize>4</DataSize>
+            <Source xsi:type="RowBinding" dwd:design-time-name="c90a22f5-dfd1-4c84-8460-06388eccd561">
+              <TableID>dbo_hecho_tickets</TableID>
+            </Source>
+          </Source>
+        </Measure>
+      </Measures>
+      <StorageMode>Molap</StorageMode>
+      <ProcessingMode>Regular</ProcessingMode>
+      <Dimensions>
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="4a79fad2-62e9-4d83-bdb3-94a934c8f2ed">
+          <CubeDimensionID>Dim Categoria Ticket</CubeDimensionID>
+          <Attributes>
+            <Attribute dwd:design-time-name="2bb18737-d468-4e97-826f-628d9e5ff983">
+              <AttributeID>ID Categoria Ticket</AttributeID>
+              <KeyColumns>
+                <KeyColumn dwd:design-time-name="62443af2-14a5-477c-a018-0ab4c2ef0e8c">
+                  <DataType>Integer</DataType>
+                  <NullProcessing>UnknownMember</NullProcessing>
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="753e227d-6b4e-4409-b54b-e5bea67fc9a8">
+                    <TableID>dbo_hecho_tickets</TableID>
+                    <ColumnID>IDCategoriaTicket</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <Type>Granularity</Type>
+            </Attribute>
+          </Attributes>
+        </Dimension>
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="068ed915-5e9f-4930-baab-70d969441eb0">
+          <CubeDimensionID>Dim Metodo Pago</CubeDimensionID>
+          <Attributes>
+            <Attribute dwd:design-time-name="0eb9a7bc-0c1e-4e34-a21c-23ebf1d387fc">
+              <AttributeID>ID Metodo Pago</AttributeID>
+              <KeyColumns>
+                <KeyColumn dwd:design-time-name="b13ad726-41c4-42ec-9cd0-74492a25d540">
+                  <DataType>Integer</DataType>
+                  <NullProcessing>UnknownMember</NullProcessing>
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="c0bfc999-e35a-47d8-8d99-4e56a39c1886">
+                    <TableID>dbo_hecho_tickets</TableID>
+                    <ColumnID>IDMetodoPago</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <Type>Granularity</Type>
+            </Attribute>
+          </Attributes>
+        </Dimension>
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="e5571fa8-7f26-499a-b98e-50cb8197cf84">
+          <CubeDimensionID>DimTiempo</CubeDimensionID>
+          <Attributes>
+            <Attribute dwd:design-time-name="e519cb59-c54f-48ba-a4f3-cddb637b4845">
+              <AttributeID>Fecha</AttributeID>
+              <KeyColumns>
+                <KeyColumn dwd:design-time-name="40c18a44-93dd-4522-8699-3c80d631a87e">
+                  <DataType>Date</DataType>
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="8b6e0441-6037-42db-a2f5-e293b074ed99">
+                    <TableID>dbo_hecho_tickets</TableID>
+                    <ColumnID>FechaTicket</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <Type>Granularity</Type>
+            </Attribute>
+          </Attributes>
+        </Dimension>
+      </Dimensions>
+      <Partitions />
+    </MeasureGroup>
+  </MeasureGroups>
+  <Source dwd:design-time-name="4be6796d-2543-48ce-8552-9a4a7b1464ed">
+    <DataSourceViewID>TicketsDM</DataSourceViewID>
+  </Source>
+</Cube>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LAPTOP-DA2SAEV6.reservasDM.sa"
+  DTS:DTSID="{1A10D595-1D49-4B31-B7E0-668856FBE710}"
+  DTS:CreationName="ADO.NET:System.Data.OleDb.OleDbConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=LAPTOP-DA2SAEV6;User ID=sa;Initial Catalog=reservasDM;Provider=SQLOLEDB.1;Persist Security Info=True;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXrio989zFkaVgEV/ek7tIgAAAAACAAAAAAAQZgAAAAEAACAAAABKHeLjXHuZPXT8dx9Q9b/mB1VMyCtx04qHlfiQ2adTxgAAAAAOgAAAAAIAACAAAAAj0E1rIzwzce1oSeMLNOA1zWJw7C+8L8bIgSkn5LD41YAAAABG27d1MbAx3QhyhZormmueNCmZUIUwC2DTebbjASWVPsaH0Qy1KlN/BFvspOfDrbH05d+ORTPot3p5F7ewwUd7FezYiWgvURxHDVChClFXwTIJRZ/8+/bHLXUfVE4p+NT1owmjn9CKQL1fGweR8Kho3X58O6zzKFvs30NWL7gZL0AAAADS3OYX1lg9kLKPT1v9IcW1R5lcQjp89JuAOscIDwztl0foq1VLMJDvsMrEAfyO1CCHaGeDyqkf7FPghTZyJUHw</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

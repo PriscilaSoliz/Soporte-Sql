@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LAPTOP-DA2SAEV6 reservasDM saOLEDB"
+  DTS:DTSID="{528803E3-AADA-496C-A388-0B79787B9639}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=LAPTOP-DA2SAEV6;User ID=sa;Initial Catalog=reservasDM;Provider=SQLOLEDB.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-SSIS_Reservas-{528803E3-AADA-496C-A388-0B79787B9639}LAPTOP-DA2SAEV6.reservasDM.sa1;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXrio989zFkaVgEV/ek7tIgAAAAACAAAAAAAQZgAAAAEAACAAAAALd++oAu+nepz3q5D6er4azxDbacc9m/9X6Bdk5LboXQAAAAAOgAAAAAIAACAAAAAK5pcFk3RUbcg2cfNCaLNmBzQNG2ZYFDB9faMk+pq66IAAAABMCoWQuYbs8jMw1CPBnCQRR+bwkCWbCMeqlX9UPxmqfOSEL7pl5JwOprAnYvk4I4v/ISZARycz/NDCrahPigcChSHqhkuARNLtGwT7oUIrF6kWV4IADVzN2r0gevvmz4+5rztvL1Ms59q9Ncdbz11mkCVCOhvumFfX3kUjnbkbcUAAAABj/9lTESEmE3tNdjvAke/QIhPQDzoNDMEvpKx893EuP5Wic1670FRRmd2XYT30AlK884CeqxY5WcxuTtVirU0n</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

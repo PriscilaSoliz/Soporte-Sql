@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LAPTOP-DA2SAEV6.soporte_AERO.sa"
+  DTS:DTSID="{7F2A8234-A0E1-4A6E-B511-6AFFD0036DC0}"
+  DTS:CreationName="ADO.NET:System.Data.OleDb.OleDbConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=LAPTOP-DA2SAEV6;User ID=sa;Initial Catalog=soporte_AERO;Provider=SQLOLEDB.1;Persist Security Info=True;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXrio989zFkaVgEV/ek7tIgAAAAACAAAAAAAQZgAAAAEAACAAAAAjTNuxo2Qp62Dnu+J2OBZmaKgGRkMbI9DMcBWSrfqY9wAAAAAOgAAAAAIAACAAAAAfBHTO+Z8g3vmrKoplVi+31hWgrwgmtbfPEKhc9megjYAAAADdxtpZh9Ydno/IqqS9pLPSK7wkKJVFp30d6hvY+OHtlxBcDM5DT335WzYkf/y4X1T5Y6YeKif/5iBqkgyhdVR9FhkT5814TPrREns6r65r+hFhxWMA5EBSlgR0fyS7aQ3ugJMPHd7GkxhZ8DogTCw5XzD3gCbBLI/Pj6p5U6Dj4kAAAAD6+vjvUFQIWjLJaaqbS8bI0Vpcg6e+81F/KB0McmfRKiyR7eLARImuB+CA2EZWEZ+V/2ux9OhR6XyTL9sz+waK</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

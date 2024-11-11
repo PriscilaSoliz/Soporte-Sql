@@ -1,0 +1,130 @@
+﻿<DataSourceView xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="e6e7e82e-d290-4461-9abe-0c1eea2720bb" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>PagosDM</ID>
+  <Name>PagosDM</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:CurrentLayout</Name>
+      <Value>_ALL_TABLES_</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:SchemaRestriction</Name>
+      <Value></Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:RetrieveRelationships</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:Layouts</Name>
+      <Value>
+        <Layouts xmlns="">
+          <Diagram>
+            <Name>_ALL_TABLES_</Name>
+            <DiagramLayout />
+            <ShowRelationshipNames>False</ShowRelationshipNames>
+            <UseDiagramDefaultLayout>True</UseDiagramDefaultLayout>
+            <DiagramViewPortLeft>0</DiagramViewPortLeft>
+            <DiagramViewPortTop>0</DiagramViewPortTop>
+            <DiagramBoundingLeft>0</DiagramBoundingLeft>
+            <DiagramBoundingTop>0</DiagramBoundingTop>
+            <DiagramZoom>100</DiagramZoom>
+          </Diagram>
+        </Layouts>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <DataSourceID>Reservas DM</DataSourceID>
+  <Schema>
+    <xs:schema id="PagosDM" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+      <xs:element name="PagosDM" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:design-time-name="616d3836-15f9-4878-8ac3-2703a60127a4">
+        <xs:complexType>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="dbo_DimCliente" msprop:DbTableName="DimCliente" msprop:FriendlyName="DimCliente" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="0c6d6971-3592-43e0-8db8-e09c1731057f">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDCliente" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDCliente" msprop:DbColumnName="IDCliente" msprop:design-time-name="9f224d60-e5fd-42b9-bd14-bf2a8bd8ced5" type="xs:int" />
+                  <xs:element name="IDCustomer" msprop:FriendlyName="IDCustomer" msprop:DbColumnName="IDCustomer" msprop:design-time-name="8144b5d6-527d-4c3c-ac0d-f3409be971f3" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="fcc96ffb-5c8e-4e02-ace8-0549cf4e2849" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="200" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="CategoryName" msprop:FriendlyName="CategoryName" msprop:DbColumnName="CategoryName" msprop:design-time-name="bbb256d9-cc8c-4777-ae26-33ceba3abd89" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_DimMetodoPago" msprop:DbTableName="DimMetodoPago" msprop:FriendlyName="DimMetodoPago" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="3dc1ed76-28a7-4c60-98a2-091659064ced">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDMetodoPago" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDMetodoPago" msprop:DbColumnName="IDMetodoPago" msprop:design-time-name="5cb0558c-1662-4323-aba9-4c84e910d7d0" type="xs:int" />
+                  <xs:element name="IDPaymentMetthod" msprop:FriendlyName="IDPaymentMetthod" msprop:DbColumnName="IDPaymentMetthod" msprop:design-time-name="7ead613d-eda7-448c-9f1b-dc3a9f1364ec" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="e3bf1473-80b1-4ed1-ab34-5b46e66439a8" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_hecho_pagos" msprop:DbTableName="hecho_pagos" msprop:FriendlyName="hecho_pagos" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="fa725d67-ec55-4cbf-96c3-1d43344b6e07">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDPago" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDPago" msprop:DbColumnName="IDPago" msprop:design-time-name="0e8c8dde-1ba1-42f8-9096-556ae1d841b6" type="xs:int" />
+                  <xs:element name="IDCliente" msprop:FriendlyName="IDCliente" msprop:DbColumnName="IDCliente" msprop:design-time-name="9b1e4344-0520-42e5-8d66-b3e4cbe58bcd" type="xs:int" minOccurs="0" />
+                  <xs:element name="IDMetodoPago" msprop:FriendlyName="IDMetodoPago" msprop:DbColumnName="IDMetodoPago" msprop:design-time-name="d2f566e4-66b8-4f58-b788-4d6cddefb3c6" type="xs:int" minOccurs="0" />
+                  <xs:element name="MontoPago" msprop:FriendlyName="MontoPago" msprop:DbColumnName="MontoPago" msprop:design-time-name="6a212afd-4c11-46c1-8aa6-9a2a0a4665e4" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="CantidadTickets" msprop:FriendlyName="CantidadTickets" msprop:DbColumnName="CantidadTickets" msprop:design-time-name="85edb832-3d0f-4384-914f-6b5cde66b5ce" type="xs:int" minOccurs="0" />
+                  <xs:element name="DiasReservaPago" msprop:FriendlyName="DiasReservaPago" msprop:DbColumnName="DiasReservaPago" msprop:design-time-name="363c1b35-f08d-44a8-8f27-df8a3a1de6e0" type="xs:int" minOccurs="0" />
+                  <xs:element name="FechaPago" msprop:FriendlyName="FechaPago" msprop:DbColumnName="FechaPago" msprop:design-time-name="ffce75c8-af55-4ef1-aefa-c75868a38e9a" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="10" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+        <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimCliente" />
+          <xs:field xpath="IDCliente" />
+        </xs:unique>
+        <xs:unique name="dbo_DimMetodoPago_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimMetodoPago" />
+          <xs:field xpath="IDMetodoPago" />
+        </xs:unique>
+        <xs:unique name="dbo_hecho_pagos_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_hecho_pagos" />
+          <xs:field xpath="IDPago" />
+        </xs:unique>
+        <xs:keyref name="FK__hecho_pag__IDCli__534D60F1" refer="Constraint1">
+          <xs:selector xpath=".//dbo_hecho_pagos" />
+          <xs:field xpath="IDCliente" />
+        </xs:keyref>
+        <xs:keyref name="FK__hecho_pag__IDMet__5441852A" refer="dbo_DimMetodoPago_Constraint1">
+          <xs:selector xpath=".//dbo_hecho_pagos" />
+          <xs:field xpath="IDMetodoPago" />
+        </xs:keyref>
+      </xs:element>
+    </xs:schema>
+    <PagosDM xmlns="" />
+  </Schema>
+</DataSourceView>

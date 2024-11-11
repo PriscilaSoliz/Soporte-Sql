@@ -1,0 +1,123 @@
+﻿<DataSourceView xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="a398a9a3-9f15-4246-a9c3-debcd91cabb8" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>TicketsDM</ID>
+  <Name>TicketsDM</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:CurrentLayout</Name>
+      <Value>_ALL_TABLES_</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:SchemaRestriction</Name>
+      <Value></Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:RetrieveRelationships</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:Layouts</Name>
+      <Value>
+        <Layouts xmlns="">
+          <Diagram>
+            <Name>_ALL_TABLES_</Name>
+            <DiagramLayout />
+            <ShowRelationshipNames>False</ShowRelationshipNames>
+            <UseDiagramDefaultLayout>True</UseDiagramDefaultLayout>
+            <DiagramViewPortLeft>0</DiagramViewPortLeft>
+            <DiagramViewPortTop>0</DiagramViewPortTop>
+            <DiagramBoundingLeft>0</DiagramBoundingLeft>
+            <DiagramBoundingTop>0</DiagramBoundingTop>
+            <DiagramZoom>100</DiagramZoom>
+          </Diagram>
+        </Layouts>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <DataSourceID>Reservas DM</DataSourceID>
+  <Schema>
+    <xs:schema id="TicketsDM" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+      <xs:element name="TicketsDM" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:design-time-name="85f19de6-8dea-41c5-9606-5eb9830fe891">
+        <xs:complexType>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="dbo_DimCategoriaTicket" msprop:DbTableName="DimCategoriaTicket" msprop:FriendlyName="DimCategoriaTicket" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="44a2002f-0524-4c95-bdd7-86e4915fd89a">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDCategoriaTicket" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDCategoriaTicket" msprop:DbColumnName="IDCategoriaTicket" msprop:design-time-name="f1baa884-45fa-4f6f-b59e-42655888c65c" type="xs:int" />
+                  <xs:element name="IDCategory" msprop:FriendlyName="IDCategory" msprop:DbColumnName="IDCategory" msprop:design-time-name="6eb63941-deea-4f09-b1a1-c56e3c2a676b" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="8c13fb36-8973-4b93-8a73-d5903c1f9c5e" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_DimMetodoPago" msprop:DbTableName="DimMetodoPago" msprop:FriendlyName="DimMetodoPago" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="da9a187e-f04e-4d12-8622-970a8ea99663">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDMetodoPago" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDMetodoPago" msprop:DbColumnName="IDMetodoPago" msprop:design-time-name="2dc50380-f723-4604-9803-7d29bc0861b6" type="xs:int" />
+                  <xs:element name="IDPaymentMetthod" msprop:FriendlyName="IDPaymentMetthod" msprop:DbColumnName="IDPaymentMetthod" msprop:design-time-name="c1f787f7-a635-4988-824d-b5052af41d09" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="11e15fd5-9d37-48a8-8463-92623eac7321" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_hecho_tickets" msprop:DbTableName="hecho_tickets" msprop:FriendlyName="hecho_tickets" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="823c4212-cd0c-405a-a46c-24197c6ad315">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDTicketHecho" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDTicketHecho" msprop:DbColumnName="IDTicketHecho" msprop:design-time-name="95c4b3fc-0a18-4b44-b354-47af74f7d95e" type="xs:int" />
+                  <xs:element name="IDMetodoPago" msprop:FriendlyName="IDMetodoPago" msprop:DbColumnName="IDMetodoPago" msprop:design-time-name="ef919072-538d-41be-9442-b7acd093cbc1" type="xs:int" minOccurs="0" />
+                  <xs:element name="IDCategoriaTicket" msprop:FriendlyName="IDCategoriaTicket" msprop:DbColumnName="IDCategoriaTicket" msprop:design-time-name="87df155e-778c-4fa0-817f-509174fb83ee" type="xs:int" minOccurs="0" />
+                  <xs:element name="PrecioTicket" msprop:FriendlyName="PrecioTicket" msprop:DbColumnName="PrecioTicket" msprop:design-time-name="749e4628-17d0-445e-9c52-f87076655924" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="PesoTotalEquipaje" msprop:FriendlyName="PesoTotalEquipaje" msprop:DbColumnName="PesoTotalEquipaje" msprop:design-time-name="a322c776-b768-4e7f-9bae-c83f3ca17188" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="CantidadPiezasEquipaje" msprop:FriendlyName="CantidadPiezasEquipaje" msprop:DbColumnName="CantidadPiezasEquipaje" msprop:design-time-name="bda5da45-3cda-4b92-9616-247bcc84c6f0" type="xs:int" minOccurs="0" />
+                  <xs:element name="FechaTicket" msprop:FriendlyName="FechaTicket" msprop:DbColumnName="FechaTicket" msprop:design-time-name="7c21e0f4-5853-440e-887a-96f04b26c82e" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="10" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+        <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimCategoriaTicket" />
+          <xs:field xpath="IDCategoriaTicket" />
+        </xs:unique>
+        <xs:unique name="dbo_DimMetodoPago_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimMetodoPago" />
+          <xs:field xpath="IDMetodoPago" />
+        </xs:unique>
+        <xs:unique name="dbo_hecho_tickets_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_hecho_tickets" />
+          <xs:field xpath="IDTicketHecho" />
+        </xs:unique>
+        <xs:keyref name="FK__hecho_tic__IDMet__59063A47" refer="dbo_DimMetodoPago_Constraint1">
+          <xs:selector xpath=".//dbo_hecho_tickets" />
+          <xs:field xpath="IDMetodoPago" />
+        </xs:keyref>
+        <xs:keyref name="FK__hecho_tic__IDCat__59FA5E80" refer="Constraint1">
+          <xs:selector xpath=".//dbo_hecho_tickets" />
+          <xs:field xpath="IDCategoriaTicket" />
+        </xs:keyref>
+      </xs:element>
+    </xs:schema>
+    <TicketsDM xmlns="" />
+  </Schema>
+</DataSourceView>

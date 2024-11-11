@@ -1,0 +1,29 @@
+<AnalysisServicesUserConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <UserIDs>
+          <ConfigurationSetting>
+            <Id>Reservas DM</Id>
+            <Name>Reservas DM</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXrio989zFkaVgEV/ek7tIgAAAAAYAAAAUgBlAHMAZQByAHYAYQBzACAARABNAAAAEGYAAAABAAAgAAAAqlHTr1aCqzRdX40m2q1VB5jjQG/2HlptCcVL+xy22bIAAAAADoAAAAACAAAgAAAAdVYuMSfGXAufnFbHT60YOPQ9gsbVAiJU9/KiRDhqZdcQAAAA5hWrGW/uthG6hbfFntoFh0AAAAAePpu8zgtu+fnQe3bHUYmrmIhF6cOIk+4ywq+WTubO+I21L2RoklUwh0EBtz3kHC8t7eeaF7g6ruO/S0Zwsf9t</Value>
+          </ConfigurationSetting>
+        </UserIDs>
+        <UserPasswords>
+          <ConfigurationSetting>
+            <Id>Reservas DM</Id>
+            <Name>Reservas DM</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXrio989zFkaVgEV/ek7tIgAAAAAYAAAAUgBlAHMAZQByAHYAYQBzACAARABNAAAAEGYAAAABAAAgAAAAFpZYegPtTMLqxyNwPFNiCDvcmYUSveHWlWcuIA+AkKMAAAAADoAAAAACAAAgAAAA9Rfc8zhFQ9pL1vIBRR0RTHRS7Xmv8aVgoWzv/9klNZIgAAAAT/B1BsjfpkepMNtMl0jJUNzPXkdhEpkBDcoz9v/m2NJAAAAAjYyhdSBmdHHiOcSRiWf2sK/Nj1yJL57BB/LInJ2XN6t1MfDLBp0r09neaezvsx2NzVOR4f8cQueuMPv/GRoMeQ==</Value>
+          </ConfigurationSetting>
+        </UserPasswords>
+        <TargetServer>localhost</TargetServer>
+        <TargetDatabase>SSAS_Reservas</TargetDatabase>
+        <StartObject>
+          <ObjectId></ObjectId>
+          <ObjectType>Current</ObjectType>
+        </StartObject>
+      </Options>
+    </Configuration>
+  </Configurations>
+</AnalysisServicesUserConfiguration>

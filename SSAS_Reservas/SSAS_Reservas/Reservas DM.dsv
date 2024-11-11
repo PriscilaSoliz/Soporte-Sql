@@ -1,0 +1,174 @@
+﻿<DataSourceView xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="8875aa6c-1b13-4121-b48e-1654443f6625" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Reservas DM</ID>
+  <Name>Reservas DM</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:CurrentLayout</Name>
+      <Value>_ALL_TABLES_</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:SchemaRestriction</Name>
+      <Value></Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:RetrieveRelationships</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:Layouts</Name>
+      <Value>
+        <Layouts xmlns="">
+          <Diagram>
+            <Name>_ALL_TABLES_</Name>
+            <DiagramLayout />
+            <ShowRelationshipNames>False</ShowRelationshipNames>
+            <UseDiagramDefaultLayout>True</UseDiagramDefaultLayout>
+            <DiagramViewPortLeft>0</DiagramViewPortLeft>
+            <DiagramViewPortTop>0</DiagramViewPortTop>
+            <DiagramBoundingLeft>0</DiagramBoundingLeft>
+            <DiagramBoundingTop>0</DiagramBoundingTop>
+            <DiagramZoom>100</DiagramZoom>
+          </Diagram>
+        </Layouts>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <DataSourceID>Reservas DM</DataSourceID>
+  <Schema>
+    <xs:schema id="Reservas_x0020_DM" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+      <xs:element name="Reservas_x0020_DM" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:design-time-name="9e79b84c-d691-420f-8a42-0afaabc5bf75">
+        <xs:complexType>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="dbo_DimAerolinea" msprop:DbTableName="DimAerolinea" msprop:FriendlyName="DimAerolinea" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="c198fe9d-c192-4edf-ac47-b8b4a9c60f5f">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDAerolinea" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDAerolinea" msprop:DbColumnName="IDAerolinea" msprop:design-time-name="74fa80fb-6d24-44fd-92b9-3f885650e560" type="xs:int" />
+                  <xs:element name="IDAirline" msprop:FriendlyName="IDAirline" msprop:DbColumnName="IDAirline" msprop:design-time-name="bb96308c-29ac-4a66-9d16-99c56da8447b" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="6c46e5d6-3e7a-4373-bf90-8289d8c892ee" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="CountryName" msprop:FriendlyName="CountryName" msprop:DbColumnName="CountryName" msprop:design-time-name="37f8fb67-a2d3-4b80-89f7-b0bd22912994" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_DimAeropuerto" msprop:DbTableName="DimAeropuerto" msprop:FriendlyName="DimAeropuerto" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="9d17a303-1ee0-4491-8691-ab9cbdbf0aff">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDAeropuerto" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDAeropuerto" msprop:DbColumnName="IDAeropuerto" msprop:design-time-name="85d0894d-d536-41e1-a4b6-23bebd46bfbb" type="xs:int" />
+                  <xs:element name="IDAirport" msprop:FriendlyName="IDAirport" msprop:DbColumnName="IDAirport" msprop:design-time-name="f1927345-b9a1-4ef9-a71c-b202c8b6c8ea" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="c482b562-6f3f-4e8e-8772-6542cdc3fbf5" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="CityName" msprop:FriendlyName="CityName" msprop:DbColumnName="CityName" msprop:design-time-name="8cae330a-3b2c-4dc1-a28f-6c1daa7f18e9" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="CountryName" msprop:FriendlyName="CountryName" msprop:DbColumnName="CountryName" msprop:design-time-name="e51c0693-3cab-4e38-be6f-2e4b63de0312" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_DimCliente" msprop:DbTableName="DimCliente" msprop:FriendlyName="DimCliente" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="fcf9c207-b237-496b-8025-491a880c0a4b">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDCliente" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDCliente" msprop:DbColumnName="IDCliente" msprop:design-time-name="af514200-daed-4710-9c54-31bfc2a0609b" type="xs:int" />
+                  <xs:element name="IDCustomer" msprop:FriendlyName="IDCustomer" msprop:DbColumnName="IDCustomer" msprop:design-time-name="cff34636-d04b-45c5-ba15-2402d868438c" type="xs:int" minOccurs="0" />
+                  <xs:element name="Name" msprop:FriendlyName="Name" msprop:DbColumnName="Name" msprop:design-time-name="2dbc7d7b-1b41-4edf-bb9a-95cee9a61693" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="200" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="CategoryName" msprop:FriendlyName="CategoryName" msprop:DbColumnName="CategoryName" msprop:design-time-name="39156fdb-a64e-477b-8c86-1d89be014217" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_hecho_reservas" msprop:DbTableName="hecho_reservas" msprop:FriendlyName="hecho_reservas" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="2d298486-83b8-4578-bc9e-622bcaec6247">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="IDReserva" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="IDReserva" msprop:DbColumnName="IDReserva" msprop:design-time-name="20e2a40d-38fa-4aaf-a309-61ae00b3a611" type="xs:int" />
+                  <xs:element name="IDCliente" msprop:FriendlyName="IDCliente" msprop:DbColumnName="IDCliente" msprop:design-time-name="d49f68cb-5a58-4799-9f65-a73685eca2b4" type="xs:int" minOccurs="0" />
+                  <xs:element name="IDAeropuerto" msprop:FriendlyName="IDAeropuerto" msprop:DbColumnName="IDAeropuerto" msprop:design-time-name="6a1d36ba-9e21-492e-9aeb-3665450af2c7" type="xs:int" minOccurs="0" />
+                  <xs:element name="IDAerolinea" msprop:FriendlyName="IDAerolinea" msprop:DbColumnName="IDAerolinea" msprop:design-time-name="b5d3aa61-3f23-4ada-84ef-15ae8b29ca64" type="xs:int" minOccurs="0" />
+                  <xs:element name="CantidadTickets" msprop:FriendlyName="CantidadTickets" msprop:DbColumnName="CantidadTickets" msprop:design-time-name="e931cbf3-b3d1-44f9-816c-c24b4ee452c1" type="xs:int" minOccurs="0" />
+                  <xs:element name="AnticipacionReservaDias" msprop:FriendlyName="AnticipacionReservaDias" msprop:DbColumnName="AnticipacionReservaDias" msprop:design-time-name="27c8f4ff-ea6c-4fe0-aaf6-945c11c5e945" type="xs:int" minOccurs="0" />
+                  <xs:element name="FechaReserva" msprop:FriendlyName="FechaReserva" msprop:DbColumnName="FechaReserva" msprop:design-time-name="17bd845a-cd6c-42ee-8301-cf784fc1cd41" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="10" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+        <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimAerolinea" />
+          <xs:field xpath="IDAerolinea" />
+        </xs:unique>
+        <xs:unique name="dbo_DimAeropuerto_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimAeropuerto" />
+          <xs:field xpath="IDAeropuerto" />
+        </xs:unique>
+        <xs:unique name="dbo_DimCliente_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_DimCliente" />
+          <xs:field xpath="IDCliente" />
+        </xs:unique>
+        <xs:unique name="dbo_hecho_reservas_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+          <xs:selector xpath=".//dbo_hecho_reservas" />
+          <xs:field xpath="IDReserva" />
+        </xs:unique>
+        <xs:keyref name="FK__hecho_res__IDAer__4F7CD00D" refer="dbo_DimAeropuerto_Constraint1">
+          <xs:selector xpath=".//dbo_hecho_reservas" />
+          <xs:field xpath="IDAeropuerto" />
+        </xs:keyref>
+        <xs:keyref name="FK__hecho_res__IDCli__4E88ABD4" refer="dbo_DimCliente_Constraint1">
+          <xs:selector xpath=".//dbo_hecho_reservas" />
+          <xs:field xpath="IDCliente" />
+        </xs:keyref>
+        <xs:keyref name="FK__hecho_res__IDAer__5070F446" refer="Constraint1">
+          <xs:selector xpath=".//dbo_hecho_reservas" />
+          <xs:field xpath="IDAerolinea" />
+        </xs:keyref>
+      </xs:element>
+    </xs:schema>
+    <Reservas_x0020_DM xmlns="" />
+  </Schema>
+</DataSourceView>

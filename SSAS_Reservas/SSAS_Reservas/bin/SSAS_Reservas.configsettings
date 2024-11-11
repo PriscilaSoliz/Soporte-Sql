@@ -1,0 +1,101 @@
+﻿<ConfigurationSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Database>
+    <DataSources>
+      <DataSource>
+        <ID>Reservas DM</ID>
+        <ConnectionString>Provider=SQLOLEDB.1;Data Source=LAPTOP-DA2SAEV6;Persist Security Info=True;Password=;User ID=;Initial Catalog=reservasDM</ConnectionString>
+        <ImpersonationInfo>
+          <ImpersonationMode xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">ImpersonateServiceAccount</ImpersonationMode>
+          <ImpersonationInfoSecurity xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">Unchanged</ImpersonationInfoSecurity>
+        </ImpersonationInfo>
+      </DataSource>
+    </DataSources>
+    <Dimensions>
+      <Dimension>
+        <ID>Dim Aerolinea</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Cliente</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Aeropuerto</ID>
+      </Dimension>
+      <Dimension>
+        <ID>DimTiempo</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Metodo Pago</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Categoria Ticket</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Categoria Vuelo</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Avion</ID>
+      </Dimension>
+      <Dimension>
+        <ID>Dim Estado Vuelo</ID>
+      </Dimension>
+    </Dimensions>
+    <Cubes>
+      <Cube>
+        <ID>Reservas DM</ID>
+        <MeasureGroups>
+          <MeasureGroup>
+            <ID>Hecho Reservas</ID>
+            <Partitions>
+              <Partition>
+                <ID>Hecho Reservas</ID>
+              </Partition>
+            </Partitions>
+          </MeasureGroup>
+        </MeasureGroups>
+      </Cube>
+      <Cube>
+        <ID>PagosDM</ID>
+        <MeasureGroups>
+          <MeasureGroup>
+            <ID>Hecho Pagos</ID>
+            <Partitions>
+              <Partition>
+                <ID>Hecho Pagos</ID>
+              </Partition>
+            </Partitions>
+          </MeasureGroup>
+        </MeasureGroups>
+      </Cube>
+      <Cube>
+        <ID>TicketsDM</ID>
+        <MeasureGroups>
+          <MeasureGroup>
+            <ID>Hecho Tickets</ID>
+            <Partitions>
+              <Partition>
+                <ID>Hecho Tickets</ID>
+              </Partition>
+            </Partitions>
+          </MeasureGroup>
+        </MeasureGroups>
+      </Cube>
+      <Cube>
+        <ID>VuelosDM</ID>
+        <MeasureGroups>
+          <MeasureGroup>
+            <ID>Hecho Vuelos</ID>
+            <Partitions>
+              <Partition>
+                <ID>Hecho Vuelos</ID>
+              </Partition>
+            </Partitions>
+          </MeasureGroup>
+        </MeasureGroups>
+      </Cube>
+    </Cubes>
+    <DataSourceImpersonationInfo>
+      <ImpersonationMode xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">Default</ImpersonationMode>
+      <ImpersonationInfoSecurity xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">Unchanged</ImpersonationInfoSecurity>
+    </DataSourceImpersonationInfo>
+  </Database>
+</ConfigurationSettings>
